@@ -4,84 +4,253 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alexia Melusine | Rosa de Fogo & Luz de Ferro</title>
+    
+    <!-- Fontes e ícones -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <style>
-        /* CONTADOR VISÍVEL E BONITO */
+        /* VARIÁVEIS DE CORES */
+        :root {
+            --fire-rose: #ff0040;
+            --iron-light: #6b0f8f;
+            --dark-bg: #080808;
+            --glass-bg: rgba(20, 20, 20, 0.85);
+            --neon-glow: 0 0 20px rgba(255, 0, 64, 0.5);
+        }
+
+        /* ESTILOS GERAIS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: #eee;
+            font-family: 'Rajdhani', sans-serif;
+            background-image: 
+                linear-gradient(to bottom, rgba(0,0,0,0.9), rgba(0,0,0,0.95)),
+                url('https://raw.githubusercontent.com/alexialuzdeferro/pombagira-revelada/refs/heads/main/Al%C3%AA%20(5).png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        /* CABEÇALHO */
+        header {
+            text-align: center;
+            padding: 4rem 1rem 2rem;
+            background: linear-gradient(to bottom, transparent, var(--dark-bg));
+        }
+
+        .avatar {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 4px solid var(--fire-rose);
+            box-shadow: var(--neon-glow);
+            object-fit: cover;
+            object-position: 50% 20%;
+            margin-bottom: 1.5rem;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            text-transform: uppercase;
+            background: linear-gradient(45deg, #fff, var(--fire-rose));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .tagline {
+            letter-spacing: 3px;
+            color: var(--fire-rose);
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .description {
+            max-width: 600px;
+            margin: 0 auto;
+            color: #aaa;
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        /* CONTEÚDO PRINCIPAL */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* GRID DE CARDS */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--fire-rose);
+            box-shadow: 0 0 25px rgba(255, 0, 64, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .card-header i {
+            font-size: 1.8rem;
+            color: var(--fire-rose);
+        }
+
+        .card-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: #fff;
+        }
+
+        /* LISTA DE LINKS */
+        .links-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .link-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            text-decoration: none;
+            color: #ccc;
+            transition: all 0.3s ease;
+        }
+
+        .link-item:hover {
+            background: var(--fire-rose);
+            color: #fff;
+            transform: translateX(5px);
+        }
+
+        .link-text {
+            font-weight: 500;
+        }
+
+        .link-icon {
+            opacity: 0.7;
+        }
+
+        .highlight {
+            border: 1px solid var(--iron-light);
+            background: rgba(107, 15, 143, 0.1);
+        }
+
+        /* RODAPÉ */
+        footer {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: #666;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 3rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 1.5rem 0;
+        }
+
+        .social-links a {
+            color: #fff;
+            font-size: 1.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--fire-rose);
+            transform: scale(1.2);
+        }
+
+        /* CONTADOR DE VISUALIZAÇÕES */
         .view-counter {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background: linear-gradient(135deg, rgba(0,0,0,0.9), rgba(107,15,143,0.3));
-            backdrop-filter: blur(15px);
-            border: 2px solid var(--fire-rose);
-            border-radius: 20px;
-            padding: 12px 20px;
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 0, 64, 0.3);
+            border-radius: 12px;
+            padding: 10px 15px;
             font-size: 14px;
-            color: white;
-            z-index: 99999;
+            color: #aaa;
+            z-index: 9999;
             display: flex;
             align-items: center;
-            gap: 10px;
-            box-shadow: 0 8px 32px rgba(255, 0, 110, 0.4);
-            min-width: 150px;
-            cursor: pointer;
-            font-family: 'Montserrat', sans-serif;
+            gap: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease;
-            animation: float 3s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-5px) scale(1.02); }
+            opacity: 0.8;
         }
         
         .view-counter:hover {
-            border-color: var(--iron-light);
-            box-shadow: 0 12px 40px rgba(0, 217, 255, 0.5);
-            transform: translateY(-3px) scale(1.05);
+            opacity: 1;
+            border-color: var(--fire-rose);
+            box-shadow: 0 0 20px rgba(255, 0, 64, 0.2);
+            transform: translateY(-2px);
         }
         
         .counter-icon {
-            font-size: 18px;
             color: var(--fire-rose);
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 0.8; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.1); }
+            font-size: 1rem;
         }
         
         .counter-number {
-            font-weight: 800;
-            font-family: 'Courier New', monospace;
-            font-size: 18px;
-            color: var(--iron-light);
-            text-shadow: 0 0 15px rgba(0, 217, 255, 0.8);
-            letter-spacing: 1px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #fff;
         }
         
         .counter-text {
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.9);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        /* Modo minimalista */
-        .view-counter.minimal {
-            padding: 8px 15px;
-            min-width: auto;
-            background: rgba(0, 0, 0, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-        
-        .view-counter.minimal .counter-icon,
-        .view-counter.minimal .counter-text {
-            display: none;
-        }
-        
-        .view-counter.minimal .counter-number {
-            font-size: 16px;
+            font-size: 0.8rem;
+            color: #aaa;
         }
         
         /* Loading state */
@@ -94,42 +263,143 @@
             50% { opacity: 0.3; }
         }
         
-        /* Responsivo */
+        /* RESPONSIVIDADE */
         @media (max-width: 768px) {
+            h1 { font-size: 2.2rem; }
+            .avatar { width: 150px; height: 150px; }
+            .cards-grid { grid-template-columns: 1fr; }
             .view-counter {
                 bottom: 15px;
                 right: 15px;
-                padding: 10px 15px;
-                min-width: 130px;
+                padding: 8px 12px;
                 font-size: 12px;
             }
-            .counter-number {
-                font-size: 16px;
-            }
+            .counter-number { font-size: 1rem; }
+        }
+
+        @media (max-width: 480px) {
+            .main-content { padding: 1rem; }
+            .view-counter { font-size: 11px; }
         }
     </style>
 </head>
 <body>
-    <!-- Contador de Acessos -->
+    <!-- CABEÇALHO -->
+    <header>
+        <img src="https://raw.githubusercontent.com/alexialuzdeferro/pombagira-revelada/refs/heads/main/Al%C3%AA%20(8).png" 
+             alt="Alexia Melusine" class="avatar">
+        <h1>Alexia Melusine</h1>
+        <p class="tagline">LUZ DE FERRO | ROSA DE FOGO</p>
+        <p class="description">
+            Bem-vindo ao meu Hub Central Absoluto. Aqui estão reunidas todas as facetas do meu trabalho, 
+            desde a mais profunda paz até a mais intensa magia.
+        </p>
+    </header>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="main-content">
+        <div class="cards-grid">
+            <!-- CARD 1: IDENTIDADE & HUBS -->
+            <article class="card">
+                <div class="card-header">
+                    <i class="fa-solid fa-fingerprint"></i>
+                    <h2 class="card-title">Identidade & Hubs</h2>
+                </div>
+                <div class="links-list">
+                    <a href="https://bio.site/AlmasdePombagira" target="_blank" class="link-item highlight">
+                        <span class="link-text">Bio Site Oficial</span>
+                        <i class="fa-solid fa-external-link-alt link-icon"></i>
+                    </a>
+                    <a href="https://linktr.ee/alexiarosadefogo" target="_blank" class="link-item highlight">
+                        <span class="link-text">Linktree Rosa de Fogo</span>
+                        <i class="fa-solid fa-tree link-icon"></i>
+                    </a>
+                    <a href="https://pombagiras.my.canva.site/" target="_blank" class="link-item">
+                        <span class="link-text">Portal Canva</span>
+                        <i class="fa-solid fa-palette link-icon"></i>
+                    </a>
+                </div>
+            </article>
+
+            <!-- CARD 2: REINO POMBAGIRA -->
+            <article class="card">
+                <div class="card-header">
+                    <i class="fa-solid fa-crown"></i>
+                    <h2 class="card-title">Reino Pombagira</h2>
+                </div>
+                <div class="links-list">
+                    <a href="https://alexialuzdeferro.github.io/Hub-Pombagiras/" target="_blank" class="link-item highlight">
+                        <span class="link-text">Hub Pombagiras</span>
+                        <i class="fa-solid fa-fire link-icon"></i>
+                    </a>
+                    <a href="https://alexialuzdeferro.github.io/pombagira-revelada/" target="_blank" class="link-item">
+                        <span class="link-text">Pombagira Revelada</span>
+                        <i class="fa-solid fa-eye link-icon"></i>
+                    </a>
+                </div>
+            </article>
+
+            <!-- CARD 3: ORÁCULOS & MAGIA -->
+            <article class="card">
+                <div class="card-header">
+                    <i class="fa-solid fa-crystal-ball"></i>
+                    <h2 class="card-title">Oráculos & Magia</h2>
+                </div>
+                <div class="links-list">
+                    <a href="https://alexialuzdeferro.github.io/oraculo-pombagiras/" target="_blank" class="link-item highlight">
+                        <span class="link-text">Oráculo Pombagiras</span>
+                        <i class="fa-solid fa-bahai link-icon"></i>
+                    </a>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <!-- RODAPÉ -->
+    <footer>
+        <div class="social-links">
+            <a href="https://www.instagram.com/almasdepombagira/" target="_blank" title="Instagram">
+                <i class="fa-brands fa-instagram"></i>
+            </a>
+            <a href="https://www.youtube.com/@almasdepombagira" target="_blank" title="YouTube">
+                <i class="fa-brands fa-youtube"></i>
+            </a>
+            <a href="https://www.tiktok.com/@almasdepombagira?lang=pt-BR" target="_blank" title="TikTok">
+                <i class="fa-brands fa-tiktok"></i>
+            </a>
+        </div>
+        <p>&copy; 2026 Alexia Melusine. Todos os direitos reservados.</p>
+        <p style="margin-top: 10px; font-size: 0.8rem; opacity: 0.5;">
+            Total de Portais Ativos: 41
+        </p>
+    </footer>
+
+    <!-- CONTADOR DE VISUALIZAÇÕES -->
     <div class="view-counter" id="viewCounter">
-        <span class="counter-icon">🔥</span>
+        <i class="fa-solid fa-eye counter-icon"></i>
         <span class="counter-number" id="counterNumber">0</span>
         <span class="counter-text">Visualizações</span>
     </div>
 
-    <!-- ... (todo o conteúdo HTML anterior permanece aqui) ... -->
-
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/dist/umd/supabase.min.js"></script>
-    
     <script>
-        // CONFIGURAÇÃO
+        // ============================================
+        // CONFIGURAÇÃO DO SUPABASE E PÁGINA
+        // ============================================
         const CONFIG = {
-            PAGE_NAME: 'chamas-libriana', // ← NOME DA SUA PÁGINA
+            // SUAS CREDENCIAIS DO SUPABASE
             SUPABASE_URL: 'https://rbygxkbewzknvjjhxdvw.supabase.co',
-            SUPABASE_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJieWd4a2Jld3prbnZqamh4ZHZ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYwMDcxNjQsImV4cCI6MjA4MTU4MzE2NH0.YrHF9HEGo6yv9MyNsPzFgBhaAB1DRh2SLU8f7L6s1nY'
+            SUPABASE_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJieWd4a2Jld3prbnZqamh4ZHZ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYwMDcxNjQsImV4cCI6MjA4MTU4MzE2NH0.YrHF9HEGo6yv9MyNsPzFgBhaAB1DRh2SLU8f7L6s1nY',
+            
+            // NOME DA SUA PÁGINA (MESMO DO SQL)
+            PAGE_NAME: 'start',
+            
+            // SESSÃO DO USUÁRIO (para não contar múltiplas vezes)
+            SESSION_KEY: 'page_visit_start'
         };
-        
+
+        // ============================================
+        // INICIALIZAÇÃO
+        // ============================================
         console.log('🚀 Iniciando contador para:', CONFIG.PAGE_NAME);
         
         // Elementos DOM
@@ -139,37 +409,43 @@
         // Inicializar Supabase
         const supabase = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_KEY);
         
-        // Controle de sessão
-        const SESSION_KEY = 'counter_session_' + CONFIG.PAGE_NAME;
+        // ============================================
+        // FUNÇÕES PRINCIPAIS
+        // ============================================
         
-        // FUNÇÃO PRINCIPAL
+        // Função principal que inicia tudo
         async function initializeCounter() {
             console.log('📊 Inicializando sistema de contagem...');
             
-            // 1. Carrega contador atual
-            await loadCurrentCount();
-            
-            // 2. Incrementa se não contou nesta sessão
-            if (!sessionStorage.getItem(SESSION_KEY)) {
-                setTimeout(async () => {
+            try {
+                // 1. Primeiro, mostra o contador atual
+                await loadCurrentCount();
+                
+                // 2. Se o usuário ainda não foi contado nesta sessão, incrementa
+                if (!sessionStorage.getItem(CONFIG.SESSION_KEY)) {
+                    console.log('👤 Nova visita detectada, incrementando...');
                     await incrementCount();
-                    sessionStorage.setItem(SESSION_KEY, 'counted');
-                }, 1500);
+                    sessionStorage.setItem(CONFIG.SESSION_KEY, 'visited');
+                } else {
+                    console.log('👤 Visita já contada nesta sessão');
+                }
+                
+                // 3. Configura interatividade do contador
+                setupCounterFeatures();
+                
+                console.log('✅ Sistema de contagem inicializado com sucesso!');
+                
+            } catch (error) {
+                console.error('❌ Erro na inicialização:', error);
+                showErrorMessage();
             }
-            
-            // 3. Configura funcionalidades
-            setupCounterFeatures();
-            
-            // 4. Atualiza periodicamente
-            setInterval(loadCurrentCount, 45000);
-            
-            console.log('✅ Sistema de contagem inicializado');
         }
         
-        // Função para carregar contador atual
+        // Busca o contador atual do banco de dados
         async function loadCurrentCount() {
             try {
                 console.log('📥 Buscando contador atual...');
+                viewCounter.classList.add('loading');
                 
                 const { data, error } = await supabase
                     .from('page_views')
@@ -178,46 +454,36 @@
                     .single();
                 
                 if (error) {
-                    console.log('⚠️ Página não encontrada no banco:', error.message);
-                    counterNumber.textContent = '0';
-                    return null;
-                }
-                
-                if (data && data.view_count !== null) {
-                    const count = data.view_count;
+                    if (error.code === 'PGRST116') {
+                        console.log('📝 Página não encontrada no banco. Será criada ao incrementar.');
+                        counterNumber.textContent = '0';
+                    } else {
+                        console.error('❌ Erro ao buscar contador:', error);
+                        counterNumber.textContent = 'Erro';
+                    }
+                } else {
+                    // Sucesso! Atualiza o número na tela
+                    const count = data.view_count || 0;
                     counterNumber.textContent = count.toLocaleString('pt-BR');
-                    console.log('📊 Contador carregado:', count);
-                    return count;
+                    console.log('✅ Contador carregado:', count);
                 }
                 
-                return 0;
+                viewCounter.classList.remove('loading');
+                
             } catch (error) {
-                console.error('❌ Erro ao carregar contador:', error);
+                console.error('❌ Erro inesperado:', error);
+                viewCounter.classList.remove('loading');
                 counterNumber.textContent = 'Erro';
-                return null;
             }
         }
         
-        // Função para incrementar contador
+        // Incrementa o contador (método SIMPLES e FUNCIONAL)
         async function incrementCount() {
             try {
                 console.log('➕ Incrementando contador...');
                 viewCounter.classList.add('loading');
                 
-                // Tenta usar a função RPC primeiro
-                const { data: rpcResult, error: rpcError } = await supabase
-                    .rpc('increment_counter', { page_name: CONFIG.PAGE_NAME });
-                
-                if (!rpcError && rpcResult && rpcResult.success) {
-                    console.log('✅ Incrementado via RPC:', rpcResult.view_count);
-                    counterNumber.textContent = rpcResult.view_count.toLocaleString('pt-BR');
-                    viewCounter.classList.remove('loading');
-                    return rpcResult.view_count;
-                }
-                
-                console.log('🔄 RPC não disponível, usando método alternativo...');
-                
-                // Método alternativo
+                // PRIMEIRO: tenta buscar o registro atual
                 const { data: currentData, error: fetchError } = await supabase
                     .from('page_views')
                     .select('*')
@@ -225,22 +491,34 @@
                     .single();
                 
                 if (fetchError && fetchError.code === 'PGRST116') {
-                    // Página não existe - cria
+                    // Se a página NÃO EXISTE no banco, CRIA
+                    console.log('📝 Criando nova página no banco...');
+                    
                     const { data: newData, error: insertError } = await supabase
                         .from('page_views')
-                        .insert([{ 
-                            page: CONFIG.PAGE_NAME, 
-                            view_count: 1 
-                        }])
+                        .insert([
+                            { 
+                                page: CONFIG.PAGE_NAME, 
+                                view_count: 1,
+                                updated_at: new Date().toISOString()
+                            }
+                        ])
                         .select();
                     
-                    if (!insertError && newData && newData[0]) {
+                    if (insertError) {
+                        console.error('❌ Erro ao criar página:', insertError);
+                        // Fallback para localStorage
+                        useLocalStorageFallback();
+                    } else {
+                        console.log('✅ Página criada com sucesso!');
                         counterNumber.textContent = '1';
-                        console.log('📝 Nova página criada');
                     }
+                    
                 } else if (currentData) {
-                    // Página existe - incrementa
+                    // Se a página JÁ EXISTE, INCREMENTA
                     const newCount = (currentData.view_count || 0) + 1;
+                    
+                    console.log(`📈 Incrementando de ${currentData.view_count} para ${newCount}`);
                     
                     const { error: updateError } = await supabase
                         .from('page_views')
@@ -250,114 +528,174 @@
                         })
                         .eq('id', currentData.id);
                     
-                    if (!updateError) {
+                    if (updateError) {
+                        console.error('❌ Erro ao atualizar:', updateError);
+                        // Fallback para localStorage
+                        useLocalStorageFallback();
+                    } else {
+                        // Sucesso! Atualiza a tela
                         counterNumber.textContent = newCount.toLocaleString('pt-BR');
-                        console.log('📈 Contador atualizado:', newCount);
+                        console.log('✅ Contador atualizado para:', newCount);
                     }
                 }
                 
                 viewCounter.classList.remove('loading');
-                return null;
+                
             } catch (error) {
-                console.error('❌ Erro ao incrementar:', error);
+                console.error('❌ Erro crítico ao incrementar:', error);
                 viewCounter.classList.remove('loading');
-                return null;
+                // Fallback para localStorage
+                useLocalStorageFallback();
             }
         }
         
-        // Configura funcionalidades do contador
+        // Fallback: usa localStorage se o Supabase falhar
+        function useLocalStorageFallback() {
+            console.log('🔄 Usando fallback localStorage...');
+            
+            const storageKey = `page_counter_${CONFIG.PAGE_NAME}`;
+            let localCount = parseInt(localStorage.getItem(storageKey)) || 0;
+            localCount++;
+            
+            localStorage.setItem(storageKey, localCount);
+            counterNumber.textContent = localCount.toLocaleString('pt-BR');
+            
+            // Adiciona indicador visual de que está offline
+            viewCounter.style.borderColor = '#666';
+            viewCounter.title = 'Dados salvos localmente (modo offline)';
+            
+            console.log('📱 Contador local:', localCount);
+        }
+        
+        // Configura interatividade do contador
         function setupCounterFeatures() {
-            // Clique para alternar modo
-            viewCounter.addEventListener('click', function(e) {
+            // Clique para recarregar
+            viewCounter.addEventListener('click', async function(e) {
                 e.preventDefault();
                 e.stopPropagation();
                 
-                const isMinimal = this.classList.toggle('minimal');
-                localStorage.setItem('counter_minimal_mode', isMinimal);
+                // Feedback visual
+                this.style.transform = 'scale(0.95)';
                 
-                // Tooltip
-                this.title = isMinimal ? 'Clique para expandir' : 'Clique para modo compacto';
+                // Recarrega o contador
+                await loadCurrentCount();
+                
+                // Restaura tamanho
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 200);
+                
+                // Mostra tooltip
+                showTooltip('Contador recarregado!');
             });
             
-            // Carrega preferência
-            const savedMode = localStorage.getItem('counter_minimal_mode');
-            if (savedMode === 'true') {
-                viewCounter.classList.add('minimal');
-            }
+            // Tooltip padrão
+            viewCounter.title = 'Clique para recarregar o contador';
             
-            // Tooltip inicial
-            viewCounter.title = 'Clique para alternar modo de exibição';
-            
-            console.log('⚙️ Funcionalidades configuradas');
+            console.log('⚙️ Funcionalidades do contador configuradas');
         }
         
-        // DEBUG: Funções para teste no console
+        // Mostra uma mensagem de erro
+        function showErrorMessage() {
+            counterNumber.textContent = 'Erro';
+            counterNumber.style.color = '#ff4444';
+            viewCounter.style.borderColor = '#ff4444';
+        }
+        
+        // Mostra tooltip temporário
+        function showTooltip(message) {
+            const tooltip = document.createElement('div');
+            tooltip.textContent = message;
+            tooltip.style.position = 'absolute';
+            tooltip.style.bottom = '100%';
+            tooltip.style.right = '0';
+            tooltip.style.background = 'rgba(0,0,0,0.9)';
+            tooltip.style.color = 'white';
+            tooltip.style.padding = '8px 12px';
+            tooltip.style.borderRadius = '6px';
+            tooltip.style.fontSize = '12px';
+            tooltip.style.marginBottom = '10px';
+            tooltip.style.whiteSpace = 'nowrap';
+            tooltip.style.border = '1px solid var(--fire-rose)';
+            tooltip.style.zIndex = '10000';
+            
+            viewCounter.style.position = 'relative';
+            viewCounter.appendChild(tooltip);
+            
+            setTimeout(() => {
+                if (tooltip.parentNode) {
+                    tooltip.remove();
+                }
+            }, 2000);
+        }
+        
+        // ============================================
+        // FUNÇÕES DE DEBUG (para teste no console)
+        // ============================================
         window.debugCounter = {
-            // Recarrega contador
+            // Recarrega o contador manualmente
             reload: async () => {
                 console.log('🔄 Recarregando contador...');
-                const count = await loadCurrentCount();
-                console.log('Contador recarregado:', count);
-                return count;
+                const result = await loadCurrentCount();
+                console.log('Resultado:', result);
+                return result;
             },
             
-            // Força nova contagem
+            // Força uma nova contagem (ignora sessão)
             forceCount: async () => {
                 console.log('⚡ Forçando nova contagem...');
-                sessionStorage.removeItem(SESSION_KEY);
-                const count = await incrementCount();
-                console.log('Contagem forçada:', count);
-                return count;
+                sessionStorage.removeItem(CONFIG.SESSION_KEY);
+                const result = await incrementCount();
+                console.log('Resultado:', result);
+                return result;
             },
             
-            // Verifica banco de dados
+            // Verifica os dados no banco
             checkDatabase: async () => {
                 console.log('🔍 Verificando banco de dados...');
                 const { data, error } = await supabase
                     .from('page_views')
                     .select('*')
-                    .eq('page', CONFIG.PAGE_NAME)
-                    .single();
+                    .eq('page', CONFIG.PAGE_NAME);
                 
                 console.log('Resultado:', { data, error });
                 return data;
             },
             
-            // Lista todas as páginas
-            listAllPages: async () => {
-                console.log('📋 Listando todas as páginas...');
-                const { data, error } = await supabase
-                    .from('page_views')
-                    .select('*')
-                    .order('page');
-                
-                console.log('Páginas encontradas:', data);
-                return data;
+            // Limpa a sessão atual
+            clearSession: () => {
+                sessionStorage.removeItem(CONFIG.SESSION_KEY);
+                console.log('🗑️ Sessão limpa. Próximo recarregamento contará novamente.');
+                return true;
             },
             
-            // Obtém configuração
+            // Mostra configuração atual
             getConfig: () => {
-                console.log('⚙️ Configuração atual:', CONFIG);
+                console.log('⚙️ Configuração:', CONFIG);
                 return CONFIG;
             }
         };
         
-        // Inicializa quando o DOM estiver pronto
+        // ============================================
+        // INICIALIZAÇÃO AUTOMÁTICA
+        // ============================================
+        
+        // Inicia quando o DOM estiver pronto
         document.addEventListener('DOMContentLoaded', initializeCounter);
         
-        // Fallback se o DOM já estiver carregado
+        // Fallback: se o DOM já estiver carregado
         if (document.readyState === 'complete' || document.readyState === 'interactive') {
-            setTimeout(initializeCounter, 100);
+            setTimeout(initializeCounter, 500);
         }
         
-        // Log de ajuda
-        console.log('🎯 Contador configurado para:', CONFIG.PAGE_NAME);
+        // Mensagem de ajuda no console
+        console.log('🎯 Contador configurado para a página:', CONFIG.PAGE_NAME);
         console.log('💡 Use debugCounter no console para testes:');
-        console.log('   debugCounter.reload()      - Recarrega contador');
-        console.log('   debugCounter.forceCount()  - Força nova contagem');
-        console.log('   debugCounter.checkDatabase() - Verifica dados');
-        console.log('   debugCounter.listAllPages() - Lista todas páginas');
-        console.log('   debugCounter.getConfig()   - Mostra configuração');
+        console.log('   • debugCounter.reload()      - Recarrega contador');
+        console.log('   • debugCounter.forceCount()  - Força nova contagem');
+        console.log('   • debugCounter.checkDatabase() - Verifica dados');
+        console.log('   • debugCounter.clearSession() - Limpa sessão');
+        console.log('   • debugCounter.getConfig()   - Mostra configuração');
     </script>
 </body>
 </html>
