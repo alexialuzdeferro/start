@@ -24,11 +24,15 @@
             --neon-glow: 0 0 20px rgba(255, 0, 64, 0.5);
         }
 
-        /* ESTILOS GERAIS */
+        /* RESET E ESTILOS GERAIS */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
@@ -42,6 +46,7 @@
             background-position: center;
             background-attachment: fixed;
             min-height: 100vh;
+            line-height: 1.6;
         }
 
         /* CABEÇALHO */
@@ -49,6 +54,10 @@
             text-align: center;
             padding: 4rem 1rem 2rem;
             background: linear-gradient(to bottom, transparent, var(--dark-bg));
+        }
+
+        .avatar-container {
+            margin-bottom: 2rem;
         }
 
         .avatar {
@@ -59,7 +68,6 @@
             box-shadow: var(--neon-glow);
             object-fit: cover;
             object-position: 50% 20%;
-            margin-bottom: 1.5rem;
             animation: float 6s ease-in-out infinite;
         }
 
@@ -83,6 +91,7 @@
             color: var(--fire-rose);
             font-size: 1.2rem;
             margin-bottom: 1.5rem;
+            font-weight: 500;
         }
 
         .description {
@@ -91,13 +100,33 @@
             color: #aaa;
             font-style: italic;
             line-height: 1.6;
+            padding: 0 1rem;
         }
 
         /* CONTEÚDO PRINCIPAL */
         .main-content {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 2rem 1rem;
+        }
+
+        .page-title {
+            text-align: center;
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #fff;
+            position: relative;
+        }
+
+        .page-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: var(--fire-rose);
+            margin: 10px auto;
+            border-radius: 2px;
         }
 
         /* GRID DE CARDS */
@@ -174,6 +203,7 @@
 
         .link-icon {
             opacity: 0.7;
+            font-size: 0.9rem;
         }
 
         .highlight {
@@ -209,51 +239,62 @@
             transform: scale(1.2);
         }
 
-        /* CONTADOR DE VISUALIZAÇÕES */
+        .footer-info {
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            opacity: 0.5;
+        }
+
+        /* CONTADOR DE VISUALIZAÇÕES - DISCRETO E TRANSPARENTE */
         .view-counter {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(10, 10, 10, 0.85);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 0, 64, 0.3);
-            border-radius: 12px;
-            padding: 10px 15px;
-            font-size: 14px;
-            color: #aaa;
+            bottom: 15px;
+            right: 15px;
+            background: rgba(8, 8, 8, 0.4); /* Muito transparente */
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            padding: 6px 10px;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.6);
             z-index: 9999;
             display: flex;
             align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            gap: 6px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
             transition: all 0.3s ease;
-            opacity: 0.8;
+            opacity: 0.6; /* Mais transparente */
+            min-width: 100px;
+            max-width: 120px;
         }
         
         .view-counter:hover {
-            opacity: 1;
-            border-color: var(--fire-rose);
-            box-shadow: 0 0 20px rgba(255, 0, 64, 0.2);
-            transform: translateY(-2px);
+            opacity: 0.9;
+            background: rgba(15, 15, 15, 0.6);
+            border-color: rgba(255, 0, 64, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
         
         .counter-icon {
-            color: var(--fire-rose);
-            font-size: 1rem;
+            color: rgba(255, 0, 64, 0.7);
+            font-size: 0.8rem;
         }
         
         .counter-number {
-            font-weight: bold;
-            font-size: 1.1rem;
-            color: #fff;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-family: 'Courier New', monospace;
         }
         
         .counter-text {
-            font-size: 0.8rem;
-            color: #aaa;
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
-        /* Loading state */
+        /* Estado de carregamento */
         .view-counter.loading .counter-number {
             animation: blink 1s infinite;
         }
@@ -263,31 +304,65 @@
             50% { opacity: 0.3; }
         }
         
+        /* Modo ultra discreto (quando não está em hover) */
+        .view-counter:not(:hover) .counter-text {
+            display: none;
+        }
+        
+        .view-counter:not(:hover) {
+            min-width: 60px;
+            padding: 5px 8px;
+        }
+        
         /* RESPONSIVIDADE */
         @media (max-width: 768px) {
             h1 { font-size: 2.2rem; }
-            .avatar { width: 150px; height: 150px; }
-            .cards-grid { grid-template-columns: 1fr; }
-            .view-counter {
-                bottom: 15px;
-                right: 15px;
-                padding: 8px 12px;
-                font-size: 12px;
+            .avatar { 
+                width: 150px; 
+                height: 150px; 
             }
-            .counter-number { font-size: 1rem; }
+            .cards-grid { 
+                grid-template-columns: 1fr; 
+            }
+            .view-counter {
+                bottom: 10px;
+                right: 10px;
+                padding: 5px 8px;
+                font-size: 10px;
+                opacity: 0.7;
+            }
+            .counter-number { 
+                font-size: 0.8rem; 
+            }
+            .page-title {
+                font-size: 1.5rem;
+            }
         }
 
         @media (max-width: 480px) {
-            .main-content { padding: 1rem; }
-            .view-counter { font-size: 11px; }
+            .main-content { 
+                padding: 1rem; 
+            }
+            .view-counter { 
+                min-width: 55px;
+                max-width: 80px;
+            }
+            .view-counter:not(:hover) {
+                min-width: 50px;
+            }
+            .card {
+                padding: 1rem;
+            }
         }
     </style>
 </head>
 <body>
     <!-- CABEÇALHO -->
     <header>
-        <img src="https://raw.githubusercontent.com/alexialuzdeferro/pombagira-revelada/refs/heads/main/Al%C3%AA%20(8).png" 
-             alt="Alexia Melusine" class="avatar">
+        <div class="avatar-container">
+            <img src="https://raw.githubusercontent.com/alexialuzdeferro/pombagira-revelada/refs/heads/main/Al%C3%AA%20(8).png" 
+                 alt="Alexia Melusine" class="avatar">
+        </div>
         <h1>Alexia Melusine</h1>
         <p class="tagline">LUZ DE FERRO | ROSA DE FOGO</p>
         <p class="description">
@@ -298,6 +373,8 @@
 
     <!-- CONTEÚDO PRINCIPAL -->
     <main class="main-content">
+        <h2 class="page-title">Portais & Projetos</h2>
+        
         <div class="cards-grid">
             <!-- CARD 1: IDENTIDADE & HUBS -->
             <article class="card">
@@ -318,6 +395,10 @@
                         <span class="link-text">Portal Canva</span>
                         <i class="fa-solid fa-palette link-icon"></i>
                     </a>
+                    <a href="https://alexialuzdeferro.github.io/alexia-melusine/" target="_blank" class="link-item">
+                        <span class="link-text">Página Alexia Melusine</span>
+                        <i class="fa-solid fa-user link-icon"></i>
+                    </a>
                 </div>
             </article>
 
@@ -336,10 +417,40 @@
                         <span class="link-text">Pombagira Revelada</span>
                         <i class="fa-solid fa-eye link-icon"></i>
                     </a>
+                    <a href="https://alexialuzdeferro.github.io/almasdepombagira/" target="_blank" class="link-item">
+                        <span class="link-text">Almas de Pombagira</span>
+                        <i class="fa-solid fa-ghost link-icon"></i>
+                    </a>
+                    <a href="https://alexialuzdeferro.github.io/minha-pombagira/" target="_blank" class="link-item">
+                        <span class="link-text">Minha Pombagira</span>
+                        <i class="fa-solid fa-heart link-icon"></i>
+                    </a>
                 </div>
             </article>
 
-            <!-- CARD 3: ORÁCULOS & MAGIA -->
+            <!-- CARD 3: GIRAS & SONS -->
+            <article class="card">
+                <div class="card-header">
+                    <i class="fa-solid fa-music"></i>
+                    <h2 class="card-title">Giras & Sons</h2>
+                </div>
+                <div class="links-list">
+                    <a href="https://alexialuzdeferro.github.io/PONTOS-CANTADOS/" target="_blank" class="link-item highlight">
+                        <span class="link-text">Pontos Cantados</span>
+                        <i class="fa-solid fa-microphone-lines link-icon"></i>
+                    </a>
+                    <a href="https://alexialuzdeferro.github.io/-Soundboard-Pombagiras-/" target="_blank" class="link-item">
+                        <span class="link-text">Soundboard Interativo</span>
+                        <i class="fa-solid fa-sliders link-icon"></i>
+                    </a>
+                    <a href="https://alexialuzdeferro.github.io/gira-completa/" target="_blank" class="link-item">
+                        <span class="link-text">Gira Completa</span>
+                        <i class="fa-solid fa-rotate link-icon"></i>
+                    </a>
+                </div>
+            </article>
+
+            <!-- CARD 4: ORÁCULOS & MAGIA -->
             <article class="card">
                 <div class="card-header">
                     <i class="fa-solid fa-crystal-ball"></i>
@@ -349,6 +460,58 @@
                     <a href="https://alexialuzdeferro.github.io/oraculo-pombagiras/" target="_blank" class="link-item highlight">
                         <span class="link-text">Oráculo Pombagiras</span>
                         <i class="fa-solid fa-bahai link-icon"></i>
+                    </a>
+                    <a href="https://alexialuzdeferro.github.io/Cartas-Rosa-e-Fogo/" target="_blank" class="link-item">
+                        <span class="link-text">Cartas Rosa e Fogo</span>
+                        <i class="fa-solid fa-layer-group link-icon"></i>
+                    </a>
+                    <a href="https://alexialuzdeferro.github.io/Velas-Virtuais/" target="_blank" class="link-item">
+                        <span class="link-text">Velas Virtuais</span>
+                        <i class="fa-solid fa-fire-flame-curved link-icon"></i>
+                    </a>
+                </div>
+            </article>
+
+            <!-- CARD 5: SANTUÁRIO ZEN -->
+            <article class="card" style="border-color: #4cc9f0;">
+                <div class="card-header">
+                    <i class="fa-solid fa-spa" style="color: #4cc9f0;"></i>
+                    <h2 class="card-title" style="color: #4cc9f0;">Santuário Zen</h2>
+                </div>
+                <div class="links-list">
+                    <a href="https://alexialuzdeferro.github.io/medita-o/" target="_blank" class="link-item">
+                        <span class="link-text">Meditação Guiada</span>
+                        <i class="fa-solid fa-om link-icon"></i>
+                    </a>
+                    <a href="https://alexialuzdeferro.github.io/paz/" target="_blank" class="link-item">
+                        <span class="link-text">Espaço de Paz</span>
+                        <i class="fa-solid fa-dove link-icon"></i>
+                    </a>
+                    <a href="https://alexialuzdeferro.github.io/paz_interior/" target="_blank" class="link-item">
+                        <span class="link-text">Paz Interior</span>
+                        <i class="fa-solid fa-leaf link-icon"></i>
+                    </a>
+                </div>
+            </article>
+
+            <!-- CARD 6: DARK WAVES & MUSIC -->
+            <article class="card" style="border-color: #590022;">
+                <div class="card-header">
+                    <i class="fa-brands fa-spotify" style="color: #590022;"></i>
+                    <h2 class="card-title" style="color: #a01a44;">Dark Waves & Music</h2>
+                </div>
+                <div class="links-list">
+                    <a href="https://alexialuzdeferro.github.io/dark-music/" target="_blank" class="link-item">
+                        <span class="link-text">Dark Music Central</span>
+                        <i class="fa-solid fa-music link-icon"></i>
+                    </a>
+                    <a href="https://alexialuzdeferro.github.io/tv-cyber-goth/" target="_blank" class="link-item">
+                        <span class="link-text">TV Cyber Goth</span>
+                        <i class="fa-solid fa-tv link-icon"></i>
+                    </a>
+                    <a href="https://alexialuzdeferro.github.io/vampire-waves/" target="_blank" class="link-item">
+                        <span class="link-text">Vampire Waves</span>
+                        <i class="fa-solid fa-droplet link-icon"></i>
                     </a>
                 </div>
             </article>
@@ -369,12 +532,10 @@
             </a>
         </div>
         <p>&copy; 2026 Alexia Melusine. Todos os direitos reservados.</p>
-        <p style="margin-top: 10px; font-size: 0.8rem; opacity: 0.5;">
-            Total de Portais Ativos: 41
-        </p>
+        <p class="footer-info">Total de Portais Ativos: 41 | V.2.0</p>
     </footer>
 
-    <!-- CONTADOR DE VISUALIZAÇÕES -->
+    <!-- CONTADOR DE VISUALIZAÇÕES (DISCRETO) -->
     <div class="view-counter" id="viewCounter">
         <i class="fa-solid fa-eye counter-icon"></i>
         <span class="counter-number" id="counterNumber">0</span>
@@ -383,68 +544,59 @@
 
     <script>
         // ============================================
-        // CONFIGURAÇÃO DO SUPABASE E PÁGINA
+        // CONFIGURAÇÃO DO SUPABASE
         // ============================================
         const CONFIG = {
-            // SUAS CREDENCIAIS DO SUPABASE
             SUPABASE_URL: 'https://rbygxkbewzknvjjhxdvw.supabase.co',
             SUPABASE_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJieWd4a2Jld3prbnZqamh4ZHZ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYwMDcxNjQsImV4cCI6MjA4MTU4MzE2NH0.YrHF9HEGo6yv9MyNsPzFgBhaAB1DRh2SLU8f7L6s1nY',
-            
-            // NOME DA SUA PÁGINA (MESMO DO SQL)
             PAGE_NAME: 'start',
-            
-            // SESSÃO DO USUÁRIO (para não contar múltiplas vezes)
             SESSION_KEY: 'page_visit_start'
         };
 
         // ============================================
-        // INICIALIZAÇÃO
+        // ELEMENTOS DOM
         // ============================================
-        console.log('🚀 Iniciando contador para:', CONFIG.PAGE_NAME);
-        
-        // Elementos DOM
         const viewCounter = document.getElementById('viewCounter');
         const counterNumber = document.getElementById('counterNumber');
-        
-        // Inicializar Supabase
+
+        // ============================================
+        // INICIALIZAÇÃO DO SUPABASE
+        // ============================================
         const supabase = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_KEY);
-        
+        console.log('🚀 Supabase inicializado para:', CONFIG.PAGE_NAME);
+
         // ============================================
         // FUNÇÕES PRINCIPAIS
         // ============================================
         
-        // Função principal que inicia tudo
-        async function initializeCounter() {
-            console.log('📊 Inicializando sistema de contagem...');
+        async function initPageCounter() {
+            console.log('📊 Iniciando sistema de contagem...');
             
             try {
-                // 1. Primeiro, mostra o contador atual
+                // 1. Primeiro mostra o contador atual
                 await loadCurrentCount();
                 
-                // 2. Se o usuário ainda não foi contado nesta sessão, incrementa
-                if (!sessionStorage.getItem(CONFIG.SESSION_KEY)) {
-                    console.log('👤 Nova visita detectada, incrementando...');
+                // 2. Se for uma nova visita, incrementa
+                if (!hasVisitedInThisSession()) {
+                    console.log('👤 Nova visita, incrementando...');
                     await incrementCount();
-                    sessionStorage.setItem(CONFIG.SESSION_KEY, 'visited');
-                } else {
-                    console.log('👤 Visita já contada nesta sessão');
+                    markAsVisited();
                 }
                 
-                // 3. Configura interatividade do contador
-                setupCounterFeatures();
+                // 3. Configura interações
+                setupCounterInteractions();
                 
-                console.log('✅ Sistema de contagem inicializado com sucesso!');
+                console.log('✅ Sistema pronto!');
                 
             } catch (error) {
                 console.error('❌ Erro na inicialização:', error);
-                showErrorMessage();
+                showErrorState();
             }
         }
         
-        // Busca o contador atual do banco de dados
+        // Busca o contador atual
         async function loadCurrentCount() {
             try {
-                console.log('📥 Buscando contador atual...');
                 viewCounter.classList.add('loading');
                 
                 const { data, error } = await supabase
@@ -455,35 +607,37 @@
                 
                 if (error) {
                     if (error.code === 'PGRST116') {
-                        console.log('📝 Página não encontrada no banco. Será criada ao incrementar.');
+                        // Página não existe ainda
+                        console.log('📝 Página ainda não registrada no banco');
                         counterNumber.textContent = '0';
-                    } else {
-                        console.error('❌ Erro ao buscar contador:', error);
-                        counterNumber.textContent = 'Erro';
+                        return 0;
                     }
-                } else {
-                    // Sucesso! Atualiza o número na tela
-                    const count = data.view_count || 0;
-                    counterNumber.textContent = count.toLocaleString('pt-BR');
-                    console.log('✅ Contador carregado:', count);
+                    throw error;
                 }
                 
-                viewCounter.classList.remove('loading');
+                const count = data.view_count || 0;
+                counterNumber.textContent = count.toLocaleString('pt-BR');
+                console.log('📈 Contador atual:', count);
+                
+                return count;
                 
             } catch (error) {
-                console.error('❌ Erro inesperado:', error);
+                console.error('❌ Erro ao carregar contador:', error);
+                counterNumber.textContent = '?';
+                return null;
+                
+            } finally {
                 viewCounter.classList.remove('loading');
-                counterNumber.textContent = 'Erro';
             }
         }
         
-        // Incrementa o contador (método SIMPLES e FUNCIONAL)
+        // Incrementa o contador
         async function incrementCount() {
             try {
-                console.log('➕ Incrementando contador...');
+                console.log('➕ Incrementando...');
                 viewCounter.classList.add('loading');
                 
-                // PRIMEIRO: tenta buscar o registro atual
+                // Tenta buscar a página existente
                 const { data: currentData, error: fetchError } = await supabase
                     .from('page_views')
                     .select('*')
@@ -491,211 +645,177 @@
                     .single();
                 
                 if (fetchError && fetchError.code === 'PGRST116') {
-                    // Se a página NÃO EXISTE no banco, CRIA
-                    console.log('📝 Criando nova página no banco...');
+                    // Página não existe → cria nova
+                    console.log('📝 Criando nova entrada...');
                     
                     const { data: newData, error: insertError } = await supabase
                         .from('page_views')
-                        .insert([
-                            { 
-                                page: CONFIG.PAGE_NAME, 
-                                view_count: 1,
-                                updated_at: new Date().toISOString()
-                            }
-                        ])
-                        .select();
+                        .insert([{
+                            page: CONFIG.PAGE_NAME,
+                            view_count: 1,
+                            updated_at: new Date().toISOString()
+                        }])
+                        .select()
+                        .single();
                     
-                    if (insertError) {
-                        console.error('❌ Erro ao criar página:', insertError);
-                        // Fallback para localStorage
-                        useLocalStorageFallback();
-                    } else {
-                        console.log('✅ Página criada com sucesso!');
-                        counterNumber.textContent = '1';
-                    }
+                    if (insertError) throw insertError;
+                    
+                    counterNumber.textContent = '1';
+                    console.log('✅ Nova página criada');
+                    return 1;
                     
                 } else if (currentData) {
-                    // Se a página JÁ EXISTE, INCREMENTA
-                    const newCount = (currentData.view_count || 0) + 1;
-                    
-                    console.log(`📈 Incrementando de ${currentData.view_count} para ${newCount}`);
+                    // Página existe → incrementa
+                    const newCount = currentData.view_count + 1;
                     
                     const { error: updateError } = await supabase
                         .from('page_views')
-                        .update({ 
+                        .update({
                             view_count: newCount,
                             updated_at: new Date().toISOString()
                         })
                         .eq('id', currentData.id);
                     
-                    if (updateError) {
-                        console.error('❌ Erro ao atualizar:', updateError);
-                        // Fallback para localStorage
-                        useLocalStorageFallback();
-                    } else {
-                        // Sucesso! Atualiza a tela
-                        counterNumber.textContent = newCount.toLocaleString('pt-BR');
-                        console.log('✅ Contador atualizado para:', newCount);
-                    }
+                    if (updateError) throw updateError;
+                    
+                    counterNumber.textContent = newCount.toLocaleString('pt-BR');
+                    console.log('📈 Incrementado para:', newCount);
+                    return newCount;
                 }
                 
-                viewCounter.classList.remove('loading');
-                
             } catch (error) {
-                console.error('❌ Erro crítico ao incrementar:', error);
-                viewCounter.classList.remove('loading');
+                console.error('❌ Erro ao incrementar:', error);
                 // Fallback para localStorage
                 useLocalStorageFallback();
+                return null;
+                
+            } finally {
+                viewCounter.classList.remove('loading');
             }
         }
         
-        // Fallback: usa localStorage se o Supabase falhar
+        // Fallback com localStorage
         function useLocalStorageFallback() {
-            console.log('🔄 Usando fallback localStorage...');
+            console.log('🔄 Usando fallback localStorage');
             
-            const storageKey = `page_counter_${CONFIG.PAGE_NAME}`;
-            let localCount = parseInt(localStorage.getItem(storageKey)) || 0;
-            localCount++;
+            const key = `counter_${CONFIG.PAGE_NAME}`;
+            let count = parseInt(localStorage.getItem(key)) || 0;
+            count++;
             
-            localStorage.setItem(storageKey, localCount);
-            counterNumber.textContent = localCount.toLocaleString('pt-BR');
+            localStorage.setItem(key, count);
+            counterNumber.textContent = count.toLocaleString('pt-BR');
             
-            // Adiciona indicador visual de que está offline
+            // Indicador visual discreto
             viewCounter.style.borderColor = '#666';
-            viewCounter.title = 'Dados salvos localmente (modo offline)';
+            viewCounter.title = 'Modo offline (dados locais)';
             
-            console.log('📱 Contador local:', localCount);
+            console.log('📱 Contador local:', count);
         }
         
-        // Configura interatividade do contador
-        function setupCounterFeatures() {
+        // Controle de sessão
+        function hasVisitedInThisSession() {
+            return sessionStorage.getItem(CONFIG.SESSION_KEY) === 'true';
+        }
+        
+        function markAsVisited() {
+            sessionStorage.setItem(CONFIG.SESSION_KEY, 'true');
+        }
+        
+        // Configura interações
+        function setupCounterInteractions() {
             // Clique para recarregar
-            viewCounter.addEventListener('click', async function(e) {
+            viewCounter.addEventListener('click', async (e) => {
                 e.preventDefault();
-                e.stopPropagation();
                 
                 // Feedback visual
-                this.style.transform = 'scale(0.95)';
+                viewCounter.style.transform = 'scale(0.95)';
                 
-                // Recarrega o contador
+                // Recarrega
                 await loadCurrentCount();
                 
-                // Restaura tamanho
-                setTimeout(() => {
-                    this.style.transform = '';
-                }, 200);
+                // Tooltip
+                showTempTooltip('Contador atualizado');
                 
-                // Mostra tooltip
-                showTooltip('Contador recarregado!');
+                // Volta ao normal
+                setTimeout(() => {
+                    viewCounter.style.transform = '';
+                }, 200);
             });
             
             // Tooltip padrão
-            viewCounter.title = 'Clique para recarregar o contador';
-            
-            console.log('⚙️ Funcionalidades do contador configuradas');
+            viewCounter.title = 'Clique para atualizar';
         }
         
-        // Mostra uma mensagem de erro
-        function showErrorMessage() {
-            counterNumber.textContent = 'Erro';
-            counterNumber.style.color = '#ff4444';
-            viewCounter.style.borderColor = '#ff4444';
-        }
-        
-        // Mostra tooltip temporário
-        function showTooltip(message) {
+        // Tooltip temporário
+        function showTempTooltip(message) {
             const tooltip = document.createElement('div');
             tooltip.textContent = message;
-            tooltip.style.position = 'absolute';
-            tooltip.style.bottom = '100%';
-            tooltip.style.right = '0';
-            tooltip.style.background = 'rgba(0,0,0,0.9)';
-            tooltip.style.color = 'white';
-            tooltip.style.padding = '8px 12px';
-            tooltip.style.borderRadius = '6px';
-            tooltip.style.fontSize = '12px';
-            tooltip.style.marginBottom = '10px';
-            tooltip.style.whiteSpace = 'nowrap';
-            tooltip.style.border = '1px solid var(--fire-rose)';
-            tooltip.style.zIndex = '10000';
+            tooltip.style.cssText = `
+                position: absolute;
+                bottom: 100%;
+                right: 0;
+                background: rgba(0,0,0,0.9);
+                color: white;
+                padding: 6px 10px;
+                border-radius: 6px;
+                font-size: 11px;
+                margin-bottom: 8px;
+                white-space: nowrap;
+                border: 1px solid rgba(255,0,64,0.3);
+                z-index: 10000;
+            `;
             
             viewCounter.style.position = 'relative';
             viewCounter.appendChild(tooltip);
             
-            setTimeout(() => {
-                if (tooltip.parentNode) {
-                    tooltip.remove();
-                }
-            }, 2000);
+            setTimeout(() => tooltip.remove(), 1500);
+        }
+        
+        // Estado de erro
+        function showErrorState() {
+            counterNumber.textContent = '!';
+            counterNumber.style.color = '#ff4444';
         }
         
         // ============================================
-        // FUNÇÕES DE DEBUG (para teste no console)
+        // FUNÇÕES DE DEBUG (para console)
         // ============================================
         window.debugCounter = {
-            // Recarrega o contador manualmente
-            reload: async () => {
-                console.log('🔄 Recarregando contador...');
-                const result = await loadCurrentCount();
-                console.log('Resultado:', result);
-                return result;
-            },
-            
-            // Força uma nova contagem (ignora sessão)
+            reload: () => loadCurrentCount(),
             forceCount: async () => {
-                console.log('⚡ Forçando nova contagem...');
                 sessionStorage.removeItem(CONFIG.SESSION_KEY);
-                const result = await incrementCount();
-                console.log('Resultado:', result);
-                return result;
+                return await incrementCount();
             },
-            
-            // Verifica os dados no banco
-            checkDatabase: async () => {
-                console.log('🔍 Verificando banco de dados...');
+            checkData: async () => {
                 const { data, error } = await supabase
                     .from('page_views')
                     .select('*')
                     .eq('page', CONFIG.PAGE_NAME);
-                
-                console.log('Resultado:', { data, error });
+                console.log('📋 Dados:', { data, error });
                 return data;
             },
-            
-            // Limpa a sessão atual
             clearSession: () => {
                 sessionStorage.removeItem(CONFIG.SESSION_KEY);
-                console.log('🗑️ Sessão limpa. Próximo recarregamento contará novamente.');
-                return true;
-            },
-            
-            // Mostra configuração atual
-            getConfig: () => {
-                console.log('⚙️ Configuração:', CONFIG);
-                return CONFIG;
+                console.log('🗑️ Sessão limpa');
             }
         };
         
         // ============================================
-        // INICIALIZAÇÃO AUTOMÁTICA
+        // INICIALIZAÇÃO
         // ============================================
+        document.addEventListener('DOMContentLoaded', initPageCounter);
         
-        // Inicia quando o DOM estiver pronto
-        document.addEventListener('DOMContentLoaded', initializeCounter);
-        
-        // Fallback: se o DOM já estiver carregado
+        // Fallback se o DOM já estiver pronto
         if (document.readyState === 'complete' || document.readyState === 'interactive') {
-            setTimeout(initializeCounter, 500);
+            setTimeout(initPageCounter, 500);
         }
         
-        // Mensagem de ajuda no console
-        console.log('🎯 Contador configurado para a página:', CONFIG.PAGE_NAME);
+        // Log de ajuda
         console.log('💡 Use debugCounter no console para testes:');
-        console.log('   • debugCounter.reload()      - Recarrega contador');
-        console.log('   • debugCounter.forceCount()  - Força nova contagem');
-        console.log('   • debugCounter.checkDatabase() - Verifica dados');
-        console.log('   • debugCounter.clearSession() - Limpa sessão');
-        console.log('   • debugCounter.getConfig()   - Mostra configuração');
+        console.log('   debugCounter.reload()      - Recarrega contador');
+        console.log('   debugCounter.forceCount()  - Força nova contagem');
+        console.log('   debugCounter.checkData()   - Verifica dados');
+        console.log('   debugCounter.clearSession() - Limpa sessão');
     </script>
 </body>
 </html>
