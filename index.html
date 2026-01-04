@@ -1,410 +1,363 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alexia Melusine | O Arquivo Completo</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <title>Alexia Melusine | Rosa de Fogo & Luz de Ferro</title>
     <style>
-        :root {
-            --primary: #ff0040; /* Rosa de Fogo */
-            --secondary: #7b2cbf; /* Luz Espiritual */
-            --dark: #080808;
-            --glass: rgba(20, 20, 20, 0.85);
-            --border: 1px solid rgba(255, 255, 255, 0.15);
-            --neon-glow: 0 0 10px rgba(255, 0, 64, 0.5);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
-
-        body {
-            background-color: var(--dark);
-            color: #eee;
-            font-family: 'Rajdhani', sans-serif;
-            background-image: 
-                linear-gradient(to bottom, rgba(0,0,0,0.9), rgba(0,0,0,0.95)),
-                url('https://raw.githubusercontent.com/alexialuzdeferro/pombagira-revelada/refs/heads/main/Al%C3%AA%20(5).png');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-        }
-
-        /* --- CABEÇALHO --- */
-        header {
-            text-align: center;
-            padding: 4rem 1rem 2rem;
-            background: linear-gradient(to bottom, transparent, var(--dark));
-        }
-
-        .avatar {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            border: 4px solid var(--primary);
-            box-shadow: 0 0 30px var(--primary);
-            object-fit: cover;
-            /* AJUSTE DE CENTRALIZAÇÃO DO ROSTO: */
-            /* Move o foco da imagem para centralizar seus olhos no círculo */
-            object-position: 65% 55%; 
-            margin-bottom: 1.5rem;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0px); }
-        }
-
-        h1 {
-            font-family: 'Cinzel', serif;
-            font-size: 3rem;
-            text-transform: uppercase;
-            background: linear-gradient(45deg, #fff, var(--primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 0.5rem;
-        }
-
-        /* --- CONTAINER PRINCIPAL --- */
-        .grid-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-        }
-
-        /* --- CARDS DE CATEGORIA --- */
-        .section-card {
-            background: var(--glass);
-            border: var(--border);
-            border-radius: 15px;
-            padding: 1.5rem;
-            backdrop-filter: blur(10px);
-            transition: transform 0.3s;
-        }
-
-        .section-card:hover {
-            border-color: var(--primary);
-            box-shadow: 0 0 20px rgba(255, 0, 64, 0.2);
-        }
-
-        .card-header {
+        /* CONTADOR VISÍVEL E BONITO */
+        .view-counter {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, rgba(0,0,0,0.9), rgba(107,15,143,0.3));
+            backdrop-filter: blur(15px);
+            border: 2px solid var(--fire-rose);
+            border-radius: 20px;
+            padding: 12px 20px;
+            font-size: 14px;
+            color: white;
+            z-index: 99999;
             display: flex;
             align-items: center;
-            gap: 15px;
-            margin-bottom: 1.5rem;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding-bottom: 1rem;
-        }
-
-        .card-header i {
-            font-size: 1.8rem;
-            color: var(--primary);
-        }
-
-        .card-header h2 {
-            font-family: 'Cinzel', serif;
-            font-size: 1.5rem;
-            color: #fff;
-        }
-
-        /* --- LISTA DE LINKS --- */
-        .link-group {
-            display: flex;
-            flex-direction: column;
             gap: 10px;
+            box-shadow: 0 8px 32px rgba(255, 0, 110, 0.4);
+            min-width: 150px;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            transition: all 0.3s ease;
+            animation: float 3s ease-in-out infinite;
         }
-
-        .link-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px;
-            background: rgba(255,255,255,0.03);
-            border-radius: 8px;
-            text-decoration: none;
-            color: #ccc;
-            transition: all 0.2s;
-            font-weight: 500;
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-5px) scale(1.02); }
         }
-
-        .link-item:hover {
-            background: var(--primary);
-            color: #fff;
-            transform: translateX(5px);
+        
+        .view-counter:hover {
+            border-color: var(--iron-light);
+            box-shadow: 0 12px 40px rgba(0, 217, 255, 0.5);
+            transform: translateY(-3px) scale(1.05);
         }
-
-        .link-item span {
-            font-size: 1rem;
+        
+        .counter-icon {
+            font-size: 18px;
+            color: var(--fire-rose);
+            animation: pulse 2s infinite;
         }
-
-        .link-item i {
-            font-size: 0.8rem;
-            opacity: 0.7;
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.8; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
         }
-
-        /* --- RODAPÉ --- */
-        footer {
-            text-align: center;
-            padding: 4rem 1rem;
-            color: #666;
-            font-size: 0.9rem;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            margin-top: 3rem;
+        
+        .counter-number {
+            font-weight: 800;
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+            color: var(--iron-light);
+            text-shadow: 0 0 15px rgba(0, 217, 255, 0.8);
+            letter-spacing: 1px;
         }
-
-        .social-icons {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin: 1.5rem 0;
+        
+        .counter-text {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.9);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-
-        .social-icons a {
-            color: #fff;
-            font-size: 1.8rem;
-            transition: transform 0.3s, color 0.3s;
+        
+        /* Modo minimalista */
+        .view-counter.minimal {
+            padding: 8px 15px;
+            min-width: auto;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
-
-        .social-icons a:hover {
-            color: var(--primary);
-            transform: scale(1.2);
+        
+        .view-counter.minimal .counter-icon,
+        .view-counter.minimal .counter-text {
+            display: none;
         }
-
-        /* Destaque para links principais */
-        .highlight {
-            border: 1px solid var(--secondary);
-            background: rgba(123, 44, 191, 0.1);
+        
+        .view-counter.minimal .counter-number {
+            font-size: 16px;
         }
-
-        @media (max-width: 600px) {
-            h1 { font-size: 2.2rem; }
-            .grid-container { grid-template-columns: 1fr; }
+        
+        /* Loading state */
+        .view-counter.loading .counter-number {
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        
+        /* Responsivo */
+        @media (max-width: 768px) {
+            .view-counter {
+                bottom: 15px;
+                right: 15px;
+                padding: 10px 15px;
+                min-width: 130px;
+                font-size: 12px;
+            }
+            .counter-number {
+                font-size: 16px;
+            }
         }
     </style>
 </head>
 <body>
-
-    <header>
-        <img src="https://raw.githubusercontent.com/alexialuzdeferro/pombagira-revelada/refs/heads/main/Al%C3%AA%20(5).png" alt="Alexia Melusine" class="avatar">
-        <h1>Alexia Melusine</h1>
-        <p style="letter-spacing: 3px; color: var(--primary);">LUZ DE FERRO | ROSA DE FOGO</p>
-        
-        <p style="max-width: 600px; margin: 1.5rem auto 0; color: #aaa; font-style: italic;">
-            Bem-vindo ao meu Hub Central Absoluto. Aqui estão reunidas todas as facetas do meu trabalho, 
-            desde a mais profunda paz até a mais intensa magia.
-        </p>
-    </header>
-
-    <div class="grid-container">
-
-        <article class="section-card">
-            <div class="card-header">
-                <i class="fa-solid fa-fingerprint"></i>
-                <h2>Identidade & Hubs</h2>
-            </div>
-            <div class="link-group">
-                <a href="https://bio.site/AlmasdePombagira" target="_blank" class="link-item highlight">
-                    <span>Bio Site Oficial</span> <i class="fa-solid fa-external-link-alt"></i>
-                </a>
-                <a href="https://linktr.ee/alexiarosadefogo" target="_blank" class="link-item highlight">
-                    <span>Linktree Rosa de Fogo</span> <i class="fa-solid fa-tree"></i>
-                </a>
-                <a href="https://pombagiras.my.canva.site/" target="_blank" class="link-item">
-                    <span>Portal Canva</span> <i class="fa-solid fa-palette"></i>
-                </a>
-                <a href="https://alexialuzdeferro.github.io/alexia-melusine/" target="_blank" class="link-item">
-                    <span>Página Alexia Melusine</span> <i class="fa-solid fa-user"></i>
-                </a>
-                <a href="https://alexialuzdeferro.github.io/melusine/" target="_blank" class="link-item">
-                    <span>Projeto Melusine</span> <i class="fa-solid fa-star"></i>
-                </a>
-                <a href="https://alexialuzdeferro.github.io/super-hub-central/" target="_blank" class="link-item highlight">
-                    <span>Super Hub Central</span> <i class="fa-solid fa-network-wired"></i>
-                </a>
-                <a href="https://alexialuzdeferro.github.io/social-hub/" target="_blank" class="link-item">
-                    <span>Social Hub</span> <i class="fa-solid fa-share-nodes"></i>
-                </a>
-            </div>
-        </article>
-
-        <article class="section-card">
-            <div class="card-header">
-                <i class="fa-solid fa-crown"></i>
-                <h2>Reino Pombagira</h2>
-            </div>
-            <div class="link-group">
-                <a href="https://alexialuzdeferro.github.io/Hub-Pombagiras/" target="_blank" class="link-item highlight">
-                    <span>Hub Pombagiras</span> <i class="fa-solid fa-fire"></i>
-                </a>
-                <a href="https://alexialuzdeferro.github.io/Hub-Central-Pombagiras/" target="_blank" class="link-item">
-                    <span>Hub Central Pombagiras</span> <i class="fa-solid fa-circle-nodes"></i>
-                </a>
-                <a href="https://alexialuzdeferro.github.io/pombagira/" target="_blank" class="link-item">
-                    <span>Página Pombagira</span> <i class="fa-solid fa-venus"></i>
-                </a>
-                <a href="https://alexialuzdeferro.github.io/12rainhas-pombagiras/" target="_blank" class="link-item">
-                    <span>12 Rainhas</span> <i class="fa-solid fa-chess-queen"></i>
-                </a>
-                <a href="https://alexialuzdeferro.github.io/Pombagiras/" target="_blank" class="link-item">
-                    <span>Pombagiras (Geral)</span> <i class="fa-solid fa-users"></i>
-                </a>
-                <a href="https://alexialuzdeferro.github.io/pombagira-revelada/" target="_blank" class="link-item">
-                    <span>Pombagira Revelada</span> <i class="fa-solid fa-eye"></i>
-                </a>
-                <a href="https://alexialuzdeferro.github.io/pombagira_revelada/" target="_blank" class="link-item">
-                    <span>O Mistério Revelado</span> <i class="fa-solid fa-magnifying-glass"></i>
-                </a>
-                <a href="https://alexialuzdeferro.github.io/almasdepombagira/" target="_blank" class="link-item">
-                    <span>Almas de Pombagira</span> <i class="fa-solid fa-ghost"></i>
-                </a>
-                <a href="https://alexialuzdeferro.github.io/minha-pombagira/" target="_blank" class="link-item">
-                    <span>Minha Pombagira</span> <i class="fa-solid fa-heart"></i>
-                </a>
-                <a href="https://github.com/alexialuzdeferro/grimorio-das-pombagiras/" target="_blank" class="link-item">
-                    <span>Grimório (Github)</span> <i class="fa-solid fa-book-skull"></i>
-                </a>
-            </div>
-        </article>
-
-        <article class="section-card">
-            <div class="card-header">
-                <i class="fa-solid fa-music"></i>
-                <h2>Giras & Sons</h2>
-            </div>
-            <div class="link-group">
-                <a href="https://alexialuzdeferro.github.io/PONTOS-CANTADOS/" target="_blank" class="link-item highlight">
-                    <span>Pontos Cantados</span> <i class="fa-solid fa-microphone-lines"></i>
-                </a>
-                <a href="https://alexialuzdeferro.github.io/-Soundboard-Pombagiras-/" target="_blank" class="link-item">
-                    <span>Soundboard Interativo</span> <i class="fa-solid fa-sliders"></i>
-                </a>
-                <a href="https://alexialuzdeferro.github.io/misterio-das-giras/" target="_blank" class="link-item">
-                    <span>Mistério das Giras</span> <i class="fa-solid fa-spinner"></i>
-                </a>
-                <a href="https://alexialuzdeferro.github.io/gira-completa/" target="_blank" class="link-item">
-                    <span>Gira Completa</span> <i class="fa-solid fa-rotate"></i>
-                </a>
-                <a href="https://alexialuzdeferro.github.io/giras/" target="_blank" class="link-item">
-                    <span>Giras (Portal)</span> <i class="fa-solid fa-people-group"></i>
-                </a>
-            </div>
-        </article>
-
-        <article class="section-card">
-            <div class="card-header">
-                <i class="fa-solid fa-crystal-ball"></i>
-                <h2>Oráculos & Magia</h2>
-            </div>
-            <div class="link-group">
-                <a href="https://alexialuzdeferro.github.io/oraculo-pombagiras/" target="_blank" class="link-item highlight">
-                    <span>Oráculo Pombagiras</span> <i class="fa-solid fa-bahai"></i>
-                </a>
-                <a href="https://alexialuzdeferro.github.io/Cartas-Rosa-e-Fogo/" target="_blank" class="link-item">
-                    <span>Cartas Rosa e Fogo</span> <i class="fa-solid fa-layer-group"></i>
-                </a>
-                <a href="https://alexialuzdeferro.github.io/12-oraculo/" target="_blank" class="link-item">
-                    <span>O 12º Oráculo</span> <i class="fa-solid fa-dice-d20"></i>
-                </a>
-                <a href="https://alexialuzdeferro.github.io/Velas-Virtuais/" target="_blank" class="link-item">
-                    <span>Acender Velas Virtuais</span> <i class="fa-solid fa-fire-flame-curved"></i>
-                </a>
-            </div>
-        </article>
-
-        <article class="section-card" style="border-color: #4cc9f0;">
-            <div class="card-header">
-                <i class="fa-solid fa-spa" style="color: #4cc9f0;"></i>
-                <h2 style="color: #4cc9f0;">Santuário Zen</h2>
-            </div>
-            <div class="link-group">
-                <a href="https://alexialuzdeferro.github.io/medita-o/" target="_blank" class="link-item">
-                    <span>Meditação Guiada</span> <i class="fa-solid fa-om"></i>
-                </a>
-                <a href="https://alexialuzdeferro.github.io/paz/" target="_blank" class="link-item">
-                    <span>Espaço de Paz</span> <i class="fa-solid fa-dove"></i>
-                </a>
-                <a href="https://alexialuzdeferro.github.io/relaxamento/" target="_blank" class="link-item">
-                    <span>Relaxamento Profundo</span> <i class="fa-solid fa-water"></i>
-                </a>
-                <a href="https://alexialuzdeferro.github.io/paz_interior/" target="_blank" class="link-item">
-                    <span>Paz Interior</span> <i class="fa-solid fa-leaf"></i>
-                </a>
-            </div>
-        </article>
-
-        <article class="section-card" style="border-color: #590022;">
-            <div class="card-header">
-                <i class="fa-brands fa-spotify" style="color: #590022;"></i>
-                <h2 style="color: #a01a44;">Dark Waves & Music</h2>
-            </div>
-            <div class="link-group">
-                <a href="https://alexialuzdeferro.github.io/dark-music/" target="_blank" class="link-item">
-                    <span>Dark Music Central</span> <i class="fa-solid fa-music"></i>
-                </a>
-                <a href="https://alexialuzdeferro.github.io/dark-melancholy/" target="_blank" class="link-item">
-                    <span>Dark Melancholy</span> <i class="fa-solid fa-cloud-rain"></i>
-                </a>
-                <a href="https://alexialuzdeferro.github.io/tv-cyber-goth/" target="_blank" class="link-item">
-                    <span>TV Cyber Goth</span> <i class="fa-solid fa-tv"></i>
-                </a>
-                <a href="https://alexialuzdeferro.github.io/vampire-waves/" target="_blank" class="link-item">
-                    <span>Vampire Waves</span> <i class="fa-solid fa-droplet"></i>
-                </a>
-                <a href="https://alexialuzdeferro.github.io/dark-tv/" target="_blank" class="link-item">
-                    <span>Dark TV</span> <i class="fa-solid fa-film"></i>
-                </a>
-            </div>
-        </article>
-
-        <article class="section-card">
-            <div class="card-header">
-                <i class="fa-solid fa-id-card"></i>
-                <h2>Contato & Business</h2>
-            </div>
-            <div class="link-group">
-                <a href="https://alexialuzdeferro.github.io/Business-Card/" target="_blank" class="link-item">
-                    <span>Business Card</span> <i class="fa-solid fa-address-card"></i>
-                </a>
-                <a href="https://alexialuzdeferro.github.io/card_visit/" target="_blank" class="link-item">
-                    <span>Card Visit</span> <i class="fa-solid fa-id-badge"></i>
-                </a>
-                <a href="https://alexialuzdeferro.github.io/melusine-card/" target="_blank" class="link-item">
-                    <span>Melusine Card</span> <i class="fa-solid fa-address-book"></i>
-                </a>
-                <a href="https://alexialuzdeferro.github.io/visitas-card/" target="_blank" class="link-item">
-                    <span>Visitas Card</span> <i class="fa-solid fa-eye"></i>
-                </a>
-                <a href="https://alexialuzdeferro.github.io/redes_sociais/" target="_blank" class="link-item">
-                    <span>Redes Sociais</span> <i class="fa-solid fa-hashtag"></i>
-                </a>
-                <a href="https://alexialuzdeferro.github.io/melusine_redes/" target="_blank" class="link-item">
-                    <span>Melusine Redes</span> <i class="fa-solid fa-share"></i>
-                </a>
-            </div>
-        </article>
-
+    <!-- Contador de Acessos -->
+    <div class="view-counter" id="viewCounter">
+        <span class="counter-icon">🔥</span>
+        <span class="counter-number" id="counterNumber">0</span>
+        <span class="counter-text">Visualizações</span>
     </div>
 
-    <footer>
-        <div class="social-icons">
-            <a href="https://www.instagram.com/almasdepombagira/" target="_blank" title="Instagram / Redes"><i class="fa-brands fa-instagram"></i></a>
-            <a href="https://www.youtube.com/@almasdepombagira" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
-            <a href="https://www.tiktok.com/@almasdepombagira?lang=pt-BR" target="_blank" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
-        </div>
-        <p>&copy; 2026 Alexia Melusine.</p>
-        <p style="margin-top: 10px; font-size: 0.8rem; opacity: 0.5;">
-            Total de Portais Ativos: 41
-        </p>
-    </footer>
+    <!-- ... (todo o conteúdo HTML anterior permanece aqui) ... -->
 
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/dist/umd/supabase.min.js"></script>
+    
+    <script>
+        // CONFIGURAÇÃO
+        const CONFIG = {
+            PAGE_NAME: 'chamas-libriana', // ← NOME DA SUA PÁGINA
+            SUPABASE_URL: 'https://rbygxkbewzknvjjhxdvw.supabase.co',
+            SUPABASE_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJieWd4a2Jld3prbnZqamh4ZHZ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYwMDcxNjQsImV4cCI6MjA4MTU4MzE2NH0.YrHF9HEGo6yv9MyNsPzFgBhaAB1DRh2SLU8f7L6s1nY'
+        };
+        
+        console.log('🚀 Iniciando contador para:', CONFIG.PAGE_NAME);
+        
+        // Elementos DOM
+        const viewCounter = document.getElementById('viewCounter');
+        const counterNumber = document.getElementById('counterNumber');
+        
+        // Inicializar Supabase
+        const supabase = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_KEY);
+        
+        // Controle de sessão
+        const SESSION_KEY = 'counter_session_' + CONFIG.PAGE_NAME;
+        
+        // FUNÇÃO PRINCIPAL
+        async function initializeCounter() {
+            console.log('📊 Inicializando sistema de contagem...');
+            
+            // 1. Carrega contador atual
+            await loadCurrentCount();
+            
+            // 2. Incrementa se não contou nesta sessão
+            if (!sessionStorage.getItem(SESSION_KEY)) {
+                setTimeout(async () => {
+                    await incrementCount();
+                    sessionStorage.setItem(SESSION_KEY, 'counted');
+                }, 1500);
+            }
+            
+            // 3. Configura funcionalidades
+            setupCounterFeatures();
+            
+            // 4. Atualiza periodicamente
+            setInterval(loadCurrentCount, 45000);
+            
+            console.log('✅ Sistema de contagem inicializado');
+        }
+        
+        // Função para carregar contador atual
+        async function loadCurrentCount() {
+            try {
+                console.log('📥 Buscando contador atual...');
+                
+                const { data, error } = await supabase
+                    .from('page_views')
+                    .select('view_count')
+                    .eq('page', CONFIG.PAGE_NAME)
+                    .single();
+                
+                if (error) {
+                    console.log('⚠️ Página não encontrada no banco:', error.message);
+                    counterNumber.textContent = '0';
+                    return null;
+                }
+                
+                if (data && data.view_count !== null) {
+                    const count = data.view_count;
+                    counterNumber.textContent = count.toLocaleString('pt-BR');
+                    console.log('📊 Contador carregado:', count);
+                    return count;
+                }
+                
+                return 0;
+            } catch (error) {
+                console.error('❌ Erro ao carregar contador:', error);
+                counterNumber.textContent = 'Erro';
+                return null;
+            }
+        }
+        
+        // Função para incrementar contador
+        async function incrementCount() {
+            try {
+                console.log('➕ Incrementando contador...');
+                viewCounter.classList.add('loading');
+                
+                // Tenta usar a função RPC primeiro
+                const { data: rpcResult, error: rpcError } = await supabase
+                    .rpc('increment_counter', { page_name: CONFIG.PAGE_NAME });
+                
+                if (!rpcError && rpcResult && rpcResult.success) {
+                    console.log('✅ Incrementado via RPC:', rpcResult.view_count);
+                    counterNumber.textContent = rpcResult.view_count.toLocaleString('pt-BR');
+                    viewCounter.classList.remove('loading');
+                    return rpcResult.view_count;
+                }
+                
+                console.log('🔄 RPC não disponível, usando método alternativo...');
+                
+                // Método alternativo
+                const { data: currentData, error: fetchError } = await supabase
+                    .from('page_views')
+                    .select('*')
+                    .eq('page', CONFIG.PAGE_NAME)
+                    .single();
+                
+                if (fetchError && fetchError.code === 'PGRST116') {
+                    // Página não existe - cria
+                    const { data: newData, error: insertError } = await supabase
+                        .from('page_views')
+                        .insert([{ 
+                            page: CONFIG.PAGE_NAME, 
+                            view_count: 1 
+                        }])
+                        .select();
+                    
+                    if (!insertError && newData && newData[0]) {
+                        counterNumber.textContent = '1';
+                        console.log('📝 Nova página criada');
+                    }
+                } else if (currentData) {
+                    // Página existe - incrementa
+                    const newCount = (currentData.view_count || 0) + 1;
+                    
+                    const { error: updateError } = await supabase
+                        .from('page_views')
+                        .update({ 
+                            view_count: newCount,
+                            updated_at: new Date().toISOString()
+                        })
+                        .eq('id', currentData.id);
+                    
+                    if (!updateError) {
+                        counterNumber.textContent = newCount.toLocaleString('pt-BR');
+                        console.log('📈 Contador atualizado:', newCount);
+                    }
+                }
+                
+                viewCounter.classList.remove('loading');
+                return null;
+            } catch (error) {
+                console.error('❌ Erro ao incrementar:', error);
+                viewCounter.classList.remove('loading');
+                return null;
+            }
+        }
+        
+        // Configura funcionalidades do contador
+        function setupCounterFeatures() {
+            // Clique para alternar modo
+            viewCounter.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const isMinimal = this.classList.toggle('minimal');
+                localStorage.setItem('counter_minimal_mode', isMinimal);
+                
+                // Tooltip
+                this.title = isMinimal ? 'Clique para expandir' : 'Clique para modo compacto';
+            });
+            
+            // Carrega preferência
+            const savedMode = localStorage.getItem('counter_minimal_mode');
+            if (savedMode === 'true') {
+                viewCounter.classList.add('minimal');
+            }
+            
+            // Tooltip inicial
+            viewCounter.title = 'Clique para alternar modo de exibição';
+            
+            console.log('⚙️ Funcionalidades configuradas');
+        }
+        
+        // DEBUG: Funções para teste no console
+        window.debugCounter = {
+            // Recarrega contador
+            reload: async () => {
+                console.log('🔄 Recarregando contador...');
+                const count = await loadCurrentCount();
+                console.log('Contador recarregado:', count);
+                return count;
+            },
+            
+            // Força nova contagem
+            forceCount: async () => {
+                console.log('⚡ Forçando nova contagem...');
+                sessionStorage.removeItem(SESSION_KEY);
+                const count = await incrementCount();
+                console.log('Contagem forçada:', count);
+                return count;
+            },
+            
+            // Verifica banco de dados
+            checkDatabase: async () => {
+                console.log('🔍 Verificando banco de dados...');
+                const { data, error } = await supabase
+                    .from('page_views')
+                    .select('*')
+                    .eq('page', CONFIG.PAGE_NAME)
+                    .single();
+                
+                console.log('Resultado:', { data, error });
+                return data;
+            },
+            
+            // Lista todas as páginas
+            listAllPages: async () => {
+                console.log('📋 Listando todas as páginas...');
+                const { data, error } = await supabase
+                    .from('page_views')
+                    .select('*')
+                    .order('page');
+                
+                console.log('Páginas encontradas:', data);
+                return data;
+            },
+            
+            // Obtém configuração
+            getConfig: () => {
+                console.log('⚙️ Configuração atual:', CONFIG);
+                return CONFIG;
+            }
+        };
+        
+        // Inicializa quando o DOM estiver pronto
+        document.addEventListener('DOMContentLoaded', initializeCounter);
+        
+        // Fallback se o DOM já estiver carregado
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+            setTimeout(initializeCounter, 100);
+        }
+        
+        // Log de ajuda
+        console.log('🎯 Contador configurado para:', CONFIG.PAGE_NAME);
+        console.log('💡 Use debugCounter no console para testes:');
+        console.log('   debugCounter.reload()      - Recarrega contador');
+        console.log('   debugCounter.forceCount()  - Força nova contagem');
+        console.log('   debugCounter.checkDatabase() - Verifica dados');
+        console.log('   debugCounter.listAllPages() - Lista todas páginas');
+        console.log('   debugCounter.getConfig()   - Mostra configuração');
+    </script>
 </body>
 </html>
