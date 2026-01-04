@@ -54,9 +54,7 @@ O sistema organiza o caos criativo em **7 Esferas de Poder**:
 
 <div align="center">
 
-### 📸 Preview Visceral
 
-<img src="https://via.placeholder.com/800x400/000000/ff0040?text=A+INTERFACE+DO+FUTURO" alt="Preview" width="80%">
 
 <br><br>
 
