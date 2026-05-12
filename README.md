@@ -1,74 +1,56 @@
-<div align="center">
+# ✦ ALEXIA MELUSINE ✦
+### Rosa de Fogo ∞ Luz de Ferro
+**@almasdepombagira**
 
-<img src="https://raw.githubusercontent.com/alexialuzdeferro/pombagira-revelada/refs/heads/main/Al%C3%AA%20(5).png" width="200" style="border-radius: 50%; border: 4px solid #ff0040; box-shadow: 0 0 20px #ff0040;">
-
-<br><br>
-
-# 🔱 PORTAL VISCERAL 2026 | START
-
-<h3 style="color: #ff0040;">A Encruzilhada Digital de Alexia Melusine</h3>
-
-<p align="center">
-  <a href="https://alexialuzdeferro.github.io/start/">
-    <img src="https://img.shields.io/badge/Acesse_o_Portal-AO_VIVO-ff0040?style=for-the-badge&logo=pombagira&logoColor=white" alt="Link do Site">
-  </a>
-</p>
-
-<p>
-  <i>"Eu transformo o código em magia, a tela em espelho e a navegação em ritual."</i>
-</p>
+![Alexia Melusine](https://rbygxkbewzknvjjhxdvw.supabase.co/storage/v1/object/public/fotos-horiz/Ogimage%20e%20Twitter%20Card.png)
 
 ---
 
-</div>
+## 🌹 ANATOMIA DO ABISMO: O PROJETO
+Este não é apenas um repositório, é um **Portal Visceral**. Sob a regência de **Alexia Melusine**, este projeto mundial de desmistificação utiliza a tecnologia e a arte para revelar a força do feminino proibido e a sabedoria das encruzilhadas. Através de narrativas intensas, estética abyssal e educação sagrada, conectamos a espiritualidade fluida ao futuro digital.
 
-## 🔥 O Manifesto
+> "Onde o ferro encontra a luz e a rosa encontra o fogo, o segredo é revelado."
 
-Este repositório (**Start**) não é apenas uma lista de links. É o **Hub Central Absoluto** que conecta as 41 dimensões do trabalho de **Alexia Melusine** (Luz de Ferro | Rosa de Fogo).
+---
 
-Desenvolvido com uma estética **Futurista-Mística (Tendência 2026)**, este projeto utiliza o conceito de *Bento Grid* e *Glassmorphism* para criar uma experiência de usuário que flui entre o Sagrado (Pombagiras), o Pessoal (Identidade Trans/Fluida) e o Artístico (Gótico/Dark).
+## 🎙️ VOZES DAS SOMBRAS (PODCASTS & YOUTUBE)
+*Destaque para as produções audiovisuais de alta intensidade:*
 
-## 🔮 Tecnologias & Energias
+*   🎬 **YouTube Oficial:** [Assista ao Almas de Pomba-gira](https://www.youtube.com/@almasdepombagira) — O epicentro da estética visceral em movimento.
+*   🎧 **Limbo Sonoro — Anatomia do Abismo:** [Ouça no Spotify](https://open.spotify.com/show/0oeCL1QScD3v7dHeUvJjgJ) — Narrativas históricas e mergulhos no oculto.
+*   📻 **Podcast Secundário:** [Ouça no Spotify](https://open.spotify.com/show/6ahRd7QT2wcq7ldt5CJHZW) — Reflexões e diálogos das encruzilhadas.
 
-| Elemento | Tecnologia / Conceito |
-| :--- | :--- |
-| **Estrutura** | HTML5 Semântico (O Esqueleto) |
-| **Estilo** | CSS3 Moderno, Flexbox & Grid (A Pele) |
-| **Visual** | Glassmorphism & Neon Glow (A Aura) |
-| **Responsividade** | Mobile First (Onipresença) |
-| **Alma** | Identidade Visual Pombagira & Dark Aesthetics |
+---
 
-## 📂 Arquitetura dos Portais
+## 🕸️ ECOSSISTEMA DIGITAL
+*A presença de Alexia Melusine expandida por todos os canais mundiais:*
 
-O sistema organiza o caos criativo em **7 Esferas de Poder**:
+### ⚡ Social & Movimento
+*   **Instagram:** [@almasdepombagira](https://www.instagram.com/almasdepombagira/)
+*   **TikTok:** [@almasdepombagira](https://www.tiktok.com/@almasdepombagira?lang=pt-BR)
+*   **Kwai:** [@AlexiaRosadeFogo](https://www.kwai.com/@AlexiaRosadeFogo)
+*   **Threads:** [@almasdepombagira](https://www.threads.com/@almasdepombagira)
 
-1.  🆔 **Identidade & Hubs** (Bio, Linktree, Apresentação)
-2.  👑 **Reino Pombagira** (O culto, a história, as 12 Rainhas)
-3.  💃 **Giras & Sons** (Pontos cantados, rituais, soundboard)
-4.  🔮 **Oráculos & Magia** (Tarot, Velas Virtuais, Previsões)
-5.  🧘‍♀️ **Santuário Zen** (Meditação, Paz, Relaxamento)
-6.  🦇 **Dark Waves** (Cultura Gótica, Música, TV Cyber)
-7.  📇 **Business** (Cartões de visita e contatos profissionais)
+### 🔮 Comunidade & Conexão
+*   **WhatsApp Channel:** [Entre no Canal](https://whatsapp.com/channel/0029VbBs2AnJkK7J9J0nLr2G)
+*   **Telegram:** [Pomba-giras Oficial](https://t.me/pomba_giras)
+*   **Discord:** [Vortex Visceral](https://discord.gg/gWZP8R7Dqu)
+
+### ✍️ Arte & Intelecto
+*   **Behance:** [Portfolio Alexia Melusine](https://www.behance.net/alexiamelusine)
+*   **Substack:** [Escritos Abissais](https://substack.com/@alexiamelusine)
+
+---
+
+## 🕯️ CONTATO DIRETO
+Para colaborações artísticas, projetos de IA vídeo ou diálogos sobre o sagrado:
+
+📧 **Email:** [alexiamelusine7@gmail.com](mailto:alexiamelusine7@gmail.com)
+🌍 **Portal Oficial:** [pombagiras.com](https://pombagiras.com)
 
 ---
 
 <div align="center">
-
-
-
-<br><br>
-
-## 🚀 Status do Projeto
-
-![Status](https://img.shields.io/badge/Status-FINALIZADO_%26_PULSANDO-success?style=flat-square)
-![Links](https://img.shields.io/badge/Links_Ativos-41-blueviolet?style=flat-square)
-![Ano](https://img.shields.io/badge/Vision-2026-ff0040?style=flat-square)
-
-<br>
-
-<h4 style="color: #7b2cbf;">Desenvolvido com 💜 e 🔥 por Alexia Melusine</h4>
-<p><i>Laroyê!</i></p>
-
-[Instagram](https://alexialuzdeferro.github.io/redes_sociais/) • [YouTube](https://www.youtube.com/@almasdepombagira) • [TikTok](https://www.tiktok.com/@almasdepombagira?lang=pt-BR)
-
+  <p><i>© 2026 - Todos os direitos ao Sagrado Feminino.</i></p>
+  <p><b>Laroyê. ✦ ☾ ✦</b></p>
 </div>
