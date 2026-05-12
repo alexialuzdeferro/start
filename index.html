@@ -50,9 +50,6 @@
   <!-- Ícones -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer" />
 
-  <!-- Supabase -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
   <style>
     :root{
       --fire-rose:#ff0040;
@@ -305,32 +302,6 @@
 
     .social a:hover{transform: translateY(-2px); border-color: rgba(255,0,64,.35); color: #fff;}
 
-    .counter{
-      position: fixed;
-      right: 14px;
-      bottom: 14px;
-      display:flex;
-      align-items:center;
-      gap: 8px;
-      padding: 8px 10px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.32);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 10px 28px rgba(0,0,0,.35);
-      font-size: 12px;
-      color: rgba(255,255,255,.75);
-      cursor:pointer;
-      transition: .2s ease;
-      user-select:none;
-    }
-
-    .counter:hover{border-color: rgba(255,0,64,.25); background: rgba(0,0,0,.45)}
-    .counter .num{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-weight: 800; color:#fff;}
-    .counter.loading .num{opacity:.45; animation: blink 1s infinite;}
-
-    @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-
     @media (max-width: 860px){
       .hero{grid-template-columns: 1fr; text-align:center;}
       .controls{grid-template-columns: 1fr;}
@@ -349,7 +320,7 @@
         <div>
           <div class="tagline">LUZ DE FERRO • ROSA DE FOGO</div>
           <h1>Alexia Melusine</h1>
-          <p class="desc">Hub Central Absoluto: portais, projetos, meditação, giras, oráculos e música — todos reunidos em um único lugar (42 links).</p>
+          <p class="desc">Hub Central Absoluto: portais, projetos, meditação, giras, oráculos e música — todos reunidos em um único lugar.</p>
 
           <div class="controls">
             <div class="search">
@@ -397,94 +368,213 @@
         <a href="https://www.tiktok.com/@almasdepombagira?lang=pt-BR" target="_blank" rel="noopener noreferrer" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
       </div>
       <div>© 2026 Alexia Melusine. Todos os direitos reservados.</div>
-      <div style="margin-top:6px; font-size:.85rem; opacity:.75">Total de Portais Ativos: <b>42</b> | Single File</div>
+      <div style="margin-top:6px; font-size:.85rem; opacity:.75">Total de Portais Ativos | Single File</div>
     </footer>
-  </div>
-
-  <!-- Contador de visualizações -->
-  <div class="counter" id="viewCounter" title="Clique para atualizar">
-    <i class="fa-solid fa-eye" style="color:rgba(255,0,64,.85)"></i>
-    <span class="num" id="counterNumber">0</span>
-    <span class="label" style="display:none">Visualizações</span>
   </div>
 
   <script>
     // ===========================
-    // DADOS (42 LINKS)
+    // DADOS COMPLETOS (129 LINKS + 42 EXISTENTES = TOTAL CATEGORIZADO)
+    // IGNORANDO DUPLICATAS
     // ===========================
-    const DATA = {
-      cover: "https://raw.githubusercontent.com/alexialuzdeferro/pombagira-revelada/refs/heads/main/Al%C3%AA%20(3).png",
-      avatar: "https://raw.githubusercontent.com/alexialuzdeferro/pombagira-revelada/refs/heads/main/Al%C3%AA%20(4).png",
-      categories: [
-        "Identidade & Hubs",
-        "Reino Pombagira",
-        "Oráculos & Magia",
-        "Giras & Sons",
-        "Meditação",
-        "Cartão de Visita",
-        "Dark Waves & Music",
-        "Galeria",
-      ],
-      links: [
-        // Identidade & Hubs (11)
-        { id: "bio-site", title: "Bio Site Oficial", url: "https://bio.site/AlmasdePombagira", category: "Identidade & Hubs", featured: true },
-        { id: "linktree", title: "Linktree — Rosa de Fogo", url: "https://linktr.ee/alexiarosadefogo", category: "Identidade & Hubs", featured: true },
-        { id: "canva-portal", title: "Portal Canva", url: "https://pombagiras.my.canva.site/", category: "Identidade & Hubs", featured: true },
-        { id: "alexia-melusine-page", title: "Página Alexia Melusine", url: "https://alexialuzdeferro.github.io/alexia-melusine/", category: "Identidade & Hubs" },
-        { id: "melusine", title: "Melusine", url: "https://alexialuzdeferro.github.io/melusine/", category: "Identidade & Hubs" },
-        { id: "super-hub-central", title: "Super Hub Central", url: "https://alexialuzdeferro.github.io/super-hub-central/", category: "Identidade & Hubs" },
-        { id: "hub-central-pombagiras", title: "Hub Central Pombagiras", url: "https://alexialuzdeferro.github.io/Hub-Central-Pombagiras/", category: "Identidade & Hubs" },
-        { id: "hub-pombagiras", title: "Hub Pombagiras", url: "https://alexialuzdeferro.github.io/Hub-Pombagiras/", category: "Identidade & Hubs", featured: true },
-        { id: "social-hub", title: "Social Hub", url: "https://alexialuzdeferro.github.io/social-hub/", category: "Identidade & Hubs" },
-        { id: "redes-sociais", title: "Redes Sociais", url: "https://alexialuzdeferro.github.io/redes_sociais/", category: "Identidade & Hubs" },
-        { id: "melusine-redes", title: "Melusine — Redes", url: "https://alexialuzdeferro.github.io/melusine_redes/", category: "Identidade & Hubs" },
+    
+    // Mapeamento de URLs já existentes para evitar duplicatas
+    const existingUrls = new Set([
+      "https://alexialuzdeferro.github.io/Business-Card/",
+      "https://alexialuzdeferro.github.io/pombagira-revelada/",
+      "https://alexialuzdeferro.github.io/pombagira/",
+      "https://alexialuzdeferro.github.io/gerador-de-prompt/",
+      "https://alexialuzdeferro.github.io/orgulho-trans/",
+      "https://alexialuzdeferro.github.io/minha-pombagira/",
+      "https://alexialuzdeferro.github.io/vampire-waves/",
+      "https://alexialuzdeferro.github.io/Pombagiras/",
+      "https://alexialuzdeferro.github.io/chamas-libriana/",
+      "https://alexialuzdeferro.github.io/caminhos-da-rosa/",
+      "https://alexialuzdeferro.github.io/grimorio-das-pombagiras/",
+      "https://alexialuzdeferro.github.io/giras/",
+      "https://alexialuzdeferro.github.io/Fale-Comigo/",
+      "https://alexialuzdeferro.github.io/trans/",
+      "https://alexialuzdeferro.github.io/melusine.com/",
+      "https://alexialuzdeferro.github.io/almasdepombagira/",
+      "https://alexialuzdeferro.github.io/12-oraculo/",
+      "https://alexialuzdeferro.github.io/dark-music/",
+      "https://alexialuzdeferro.github.io/pombagiras-vicerais/",
+      "https://alexialuzdeferro.github.io/pombagira_revelada/",
+      "https://alexialuzdeferro.github.io/img-compressor-visceral/",
+      "https://alexialuzdeferro.github.io/medita-o/",
+      "https://alexialuzdeferro.github.io/Pombagiras--/",
+      "https://alexialuzdeferro.github.io/Pontos-Cantados-de-Pombagiras/",
+      "https://alexialuzdeferro.github.io/melusine_redes/",
+      "https://alexialuzdeferro.github.io/redes_sociais/",
+      "https://alexialuzdeferro.github.io/card-photos/",
+      "https://alexialuzdeferro.github.io/central-alexia/",
+      "https://alexialuzdeferro.github.io/start/",
+      "https://alexialuzdeferro.github.io/social-hub/",
+      "https://alexialuzdeferro.github.io/Pontos-Gira-de-Pombagiras/",
+      "https://alexialuzdeferro.github.io/misterio-das-giras/",
+      "https://alexialuzdeferro.github.io/melusine-os/",
+      "https://alexialuzdeferro.github.io/Velas-Virtuais/",
+      "https://alexialuzdeferro.github.io/oraculo-pombagiras/",
+      "https://alexialuzdeferro.github.io/super-hub-central/",
+      "https://alexialuzdeferro.github.io/Hub-Central-Pombagiras/",
+      "https://alexialuzdeferro.github.io/alexia-melusine/",
+      "https://alexialuzdeferro.github.io/Cartas-Rosa-e-Fogo/",
+      "https://alexialuzdeferro.github.io/Rosa-Caveira/",
+      "https://alexialuzdeferro.github.io/pontos-de-pombagira/",
+      "https://alexialuzdeferro.github.io/gira-completa/",
+      "https://alexialuzdeferro.github.io/melusine.com2mobile/",
+      "https://alexialuzdeferro.github.io/24-Pombagiras/",
+      "https://alexialuzdeferro.github.io/PONTOS-CANTADOS/",
+      "https://alexialuzdeferro.github.io/gotic-music/",
+      "https://alexialuzdeferro.github.io/meu-trabalho/",
+      "https://alexialuzdeferro.github.io/relaxamento/",
+      "https://alexialuzdeferro.github.io/dark-melancholy/",
+      "https://alexialuzdeferro.github.io/infernal-arcade/",
+      "https://alexialuzdeferro.github.io/dark-moon/",
+      "https://alexialuzdeferro.github.io/melusine/",
+      "https://alexialuzdeferro.github.io/texto-lido/",
+      "https://alexialuzdeferro.github.io/Markdown-Conversor/",
+      "https://alexialuzdeferro.github.io/visitas-card/",
+      "https://alexialuzdeferro.github.io/Limbo-Sonoro/",
+      "https://alexialuzdeferro.github.io/Hub-Pombagiras/",
+      "https://alexialuzdeferro.github.io/super-redes-socias/",
+      "https://alexialuzdeferro.github.io/Alexia-Melusine-Playground/",
+      "https://alexialuzdeferro.github.io/melusine.com1/",
+      "https://alexialuzdeferro.github.io/12rainhas-pombagiras/",
+      "https://alexialuzdeferro.github.io/paz_interior/",
+      "https://alexialuzdeferro.github.io/Grid-Social/",
+      "https://alexialuzdeferro.github.io/retrato-revelado/",
+      "https://alexialuzdeferro.github.io/dark-tv/",
+      "https://alexialuzdeferro.github.io/Studio-de-Thumbnails-Vortex-Visceral/",
+      "https://alexialuzdeferro.github.io/ultra-hub-pombagiras/",
+      "https://alexialuzdeferro.github.io/plataformas/",
+      "https://alexialuzdeferro.github.io/ecossistema/",
+      "https://alexialuzdeferro.github.io/sua-mensagem/",
+      "https://alexialuzdeferro.github.io/paz/",
+      "https://alexialuzdeferro.github.io/melusine-card/",
+      "https://alexialuzdeferro.github.io/card_visit/",
+      "https://alexialuzdeferro.github.io/tv-cyber-goth/",
+      "https://alexialuzdeferro.github.io/-Soundboard-Pombagiras-/",
+      "https://alexialuzdeferro.github.io/POMBAGIRAS-HUB/"
+    ]);
 
-        // Reino Pombagira (10)
-        { id: "pombagira", title: "Pombagira", url: "https://alexialuzdeferro.github.io/pombagira/", category: "Reino Pombagira" },
-        { id: "pombagira-revelada", title: "Pombagira Revelada", url: "https://alexialuzdeferro.github.io/pombagira-revelada/", category: "Reino Pombagira", featured: true },
-        { id: "pombagira-revelada-underscore", title: "Pombagira Revelada (variação)", url: "https://alexialuzdeferro.github.io/pombagira_revelada/", category: "Reino Pombagira", note: "Mantido conforme URL fornecida" },
-        { id: "pombagiras", title: "Pombagiras", url: "https://alexialuzdeferro.github.io/Pombagiras/", category: "Reino Pombagira" },
-        { id: "almasdepombagira", title: "Almas de Pombagira", url: "https://alexialuzdeferro.github.io/almasdepombagira/", category: "Reino Pombagira", featured: true },
-        { id: "minha-pombagira", title: "Minha Pombagira", url: "https://alexialuzdeferro.github.io/minha-pombagira/", category: "Reino Pombagira" },
-        { id: "12rainhas", title: "12 Rainhas — Pombagiras", url: "https://alexialuzdeferro.github.io/12rainhas-pombagiras/", category: "Reino Pombagira" },
-        { id: "giras", title: "Giras", url: "https://alexialuzdeferro.github.io/giras/", category: "Reino Pombagira" },
-        { id: "misterio-das-giras", title: "Mistério das Giras", url: "https://alexialuzdeferro.github.io/misterio-das-giras/", category: "Reino Pombagira" },
-        { id: "grimorio-github", title: "Grimório das Pombagiras (GitHub)", url: "https://github.com/alexialuzdeferro/grimorio-das-pombagiras/", category: "Reino Pombagira" },
+    const NOVOS_REPOSITORIOS = [
+      // LINKS DO GITHUB.IO - ALEXIALUZDEFERRO (NOVOS QUE NÃO ESTÃO NO CÓDIGO MÃE)
+      { title: "POMBAGIRAS-HUB", url: "https://alexialuzdeferro.github.io/POMBAGIRAS-HUB/", category: "Identidade & Hubs", featured: false },
+      { title: "Pombagiras Hub (alternativo)", url: "https://pombagiras.github.io/melusine/", category: "Identidade & Hubs", featured: false },
+      { title: "Melusine (pombagiras)", url: "https://pombagiras.github.io/melusine.com/", category: "Identidade & Hubs", featured: false },
+      { title: "Melusine Oficial", url: "https://pombagiras.github.io/melusine-oficial/", category: "Identidade & Hubs", featured: false },
+      { title: "Rainhas", url: "https://pombagiras.github.io/rainhas/", category: "Reino Pombagira", featured: false },
+      { title: "Melus", url: "https://pombagiras.github.io/melus/", category: "Identidade & Hubs", featured: false },
+      { title: "Pontos", url: "https://pombagiras.github.io/pontos/", category: "Giras & Sons", featured: false },
+      { title: "Vortex Visceral", url: "https://pombagiras.github.io/vortex-viceral/", category: "Produtividade", featured: false },
+      { title: "Limbo Sonoro", url: "https://pombagiras.github.io/limbo-sonoro/", category: "Música", featured: false },
+      { title: "Falando Direto", url: "https://pombagiras.github.io/falando-direto/", category: "Serviços", featured: false },
+      { title: "Anatomia do Abismo", url: "https://pombagiras.github.io/anatomia-do-abismo/", category: "Ensinamentos", featured: false },
+      { title: "Imersão", url: "https://pombagiras.github.io/imers-o/", category: "Ensinamentos", featured: false },
+      { title: "Força Reveladas", url: "https://pombagiras.github.io/forca-reveladas/", category: "Ensinamentos", featured: false },
+      { title: "Oráculo da Pombagira", url: "https://pombagiras.github.io/oraculo-da-pombagira/", category: "Oráculos & Magia", featured: false },
+      { title: "Dark Wave", url: "https://pombagiras.github.io/dark-wave/", category: "Música", featured: false },
+      { title: "Ecossistema (pombagiras)", url: "https://pombagiras.github.io/ecossistema/", category: "Identidade & Hubs", featured: false },
+      { title: "Business Card (pombagiras)", url: "https://pombagiras.github.io/business-card/", category: "Cartão de Visita", featured: false },
+      { title: "Grimório", url: "https://pombagiras.github.io/grimorio/", category: "Reino Pombagira", featured: false },
+      { title: "Ponto.com", url: "https://pombagiras.github.io/ponto.com/", category: "Identidade & Hubs", featured: false },
+      { title: "Canais", url: "https://pombagiras.github.io/canais/", category: "Serviços", featured: false },
+      { title: "Encruzilhadas", url: "https://pombagiras.github.io/encruzilhadas/", category: "Reino Pombagira", featured: false },
+      { title: "Thumbnails Visceral", url: "https://pombagiras.github.io/thumbnails-viceral/", category: "Produtividade", featured: false },
+      { title: "Rosa Caveira", url: "https://pombagiras.github.io/rosa-caveira-/", category: "Reino Pombagira", featured: false },
+      { title: "Redes Sociais (pombagiras)", url: "https://pombagiras.github.io/redes-sociais/", category: "Identidade & Hubs", featured: false },
+      { title: "Universo", url: "https://pombagiras.github.io/universo/", category: "Ensinamentos", featured: false },
+      { title: "Social Redes", url: "https://pombagiras.github.io/social-redes/", category: "Identidade & Hubs", featured: false },
+      { title: "Hub Central (pombagiras)", url: "https://pombagiras.github.io/hub-central/", category: "Identidade & Hubs", featured: false },
+      { title: "Meu Trabalho (pombagiras)", url: "https://pombagiras.github.io/meu-trabalho/", category: "Serviços", featured: false },
+      { title: "Ancestrais", url: "https://pombagiras.github.io/ancestrais/", category: "Ensinamentos", featured: false },
+      { title: "24 Entidades", url: "https://pombagiras.github.io/24-entidades/", category: "Reino Pombagira", featured: false },
+      { title: "Raras", url: "https://pombagiras.github.io/raras/", category: "Reino Pombagira", featured: false },
+      { title: "All Social", url: "https://pombagiras.github.io/all_social/", category: "Identidade & Hubs", featured: false },
+      { title: "Social Hub (pombagiras)", url: "https://pombagiras.github.io/social-hub/", category: "Identidade & Hubs", featured: false },
+      { title: "Minha Rainha", url: "https://pombagiras.github.io/minha-rainha/", category: "Reino Pombagira", featured: false },
+      { title: "Portais", url: "https://pombagiras.github.io/portais/", category: "Oráculos & Magia", featured: false },
+      { title: "Reveladas", url: "https://pombagiras.github.io/reveladas/", category: "Ensinamentos", featured: false },
+      { title: "Digital Card", url: "https://pombagiras.github.io/Digital-Card/", category: "Cartão de Visita", featured: false },
+      { title: "Sumário do Abismo", url: "https://pombagiras.github.io/sumario-do-abismo/", category: "Ensinamentos", featured: false },
+      { title: "Universo (alternativo)", url: "https://pombagiras.github.io/universo-/", category: "Ensinamentos", featured: false },
+      { title: "Plataforma", url: "https://pombagiras.github.io/plataforma/", category: "Serviços", featured: false },
+      { title: "Links (pombagiras)", url: "https://pombagiras.github.io/links/", category: "Identidade & Hubs", featured: false },
+      { title: "Jukebox", url: "https://pombagiras.github.io/jukebox/", category: "Música", featured: false },
+      { title: "Mensagens", url: "https://pombagiras.github.io/mensagens/", category: "Serviços", featured: false },
+      { title: "Alexia Melusine (pombagiras)", url: "https://pombagiras.github.io/Alexia-Melusine/", category: "Identidade & Hubs", featured: false },
+      { title: "Pontos Completos", url: "https://pombagiras.github.io/pontos-completos/", category: "Giras & Sons", featured: false },
+      { title: "Dark Moon (pombagiras)", url: "https://pombagiras.github.io/dark-moon/", category: "Música", featured: false },
+      { title: "Oráculo (pombagiras)", url: "https://pombagiras.github.io/oraculo/", category: "Oráculos & Magia", featured: false },
+      { title: "Despacho Digital", url: "https://pombagiras.github.io/despacho-digital/", category: "Oráculos & Magia", featured: false },
+      { title: "Oráculo de Pombagira (pombagiras)", url: "https://pombagiras.github.io/oraculo-de-pombagira/", category: "Oráculos & Magia", featured: false },
+      { title: "Pride", url: "https://orgulho-trans.github.io/Pride/", category: "Identidade & Hubs", featured: false },
+      { title: "Pride Vortex", url: "https://orgulho-trans.github.io/Pride-Vortex/", category: "Identidade & Hubs", featured: false },
+      { title: "Diversidade", url: "https://orgulho-trans.github.io/Diversidade/", category: "Ensinamentos", featured: false },
+      { title: "Links (orgulho-trans)", url: "https://orgulho-trans.github.io/Links/", category: "Identidade & Hubs", featured: false },
+      { title: "Dicas", url: "https://orgulho-trans.github.io/Dicas/", category: "Ensinamentos", featured: false }
+    ];
 
-        // Oráculos & Magia (4)
-        { id: "oraculo-pombagiras", title: "Oráculo Pombagiras", url: "https://alexialuzdeferro.github.io/oraculo-pombagiras/", category: "Oráculos & Magia", featured: true },
-        { id: "12-oraculo", title: "12 — Oráculo", url: "https://alexialuzdeferro.github.io/12-oraculo/", category: "Oráculos & Magia" },
-        { id: "cartas-rosa-e-fogo", title: "Cartas Rosa e Fogo", url: "https://alexialuzdeferro.github.io/Cartas-Rosa-e-Fogo/", category: "Oráculos & Magia" },
-        { id: "velas-virtuais", title: "Velas Virtuais", url: "https://alexialuzdeferro.github.io/Velas-Virtuais/", category: "Oráculos & Magia" },
+    // Links existentes do código mãe (42 links)
+    const EXISTING_LINKS = [
+      { id: "bio-site", title: "Bio Site Oficial", url: "https://bio.site/AlmasdePombagira", category: "Identidade & Hubs", featured: true },
+      { id: "linktree", title: "Linktree — Rosa de Fogo", url: "https://linktr.ee/alexiarosadefogo", category: "Identidade & Hubs", featured: true },
+      { id: "canva-portal", title: "Portal Canva", url: "https://pombagiras.my.canva.site/", category: "Identidade & Hubs", featured: true },
+      { id: "alexia-melusine-page", title: "Página Alexia Melusine", url: "https://alexialuzdeferro.github.io/alexia-melusine/", category: "Identidade & Hubs" },
+      { id: "melusine", title: "Melusine", url: "https://alexialuzdeferro.github.io/melusine/", category: "Identidade & Hubs" },
+      { id: "super-hub-central", title: "Super Hub Central", url: "https://alexialuzdeferro.github.io/super-hub-central/", category: "Identidade & Hubs" },
+      { id: "hub-central-pombagiras", title: "Hub Central Pombagiras", url: "https://alexialuzdeferro.github.io/Hub-Central-Pombagiras/", category: "Identidade & Hubs" },
+      { id: "hub-pombagiras", title: "Hub Pombagiras", url: "https://alexialuzdeferro.github.io/Hub-Pombagiras/", category: "Identidade & Hubs", featured: true },
+      { id: "social-hub", title: "Social Hub", url: "https://alexialuzdeferro.github.io/social-hub/", category: "Identidade & Hubs" },
+      { id: "redes-sociais", title: "Redes Sociais", url: "https://alexialuzdeferro.github.io/redes_sociais/", category: "Identidade & Hubs" },
+      { id: "melusine-redes", title: "Melusine — Redes", url: "https://alexialuzdeferro.github.io/melusine_redes/", category: "Identidade & Hubs" },
+      { id: "pombagira", title: "Pombagira", url: "https://alexialuzdeferro.github.io/pombagira/", category: "Reino Pombagira" },
+      { id: "pombagira-revelada", title: "Pombagira Revelada", url: "https://alexialuzdeferro.github.io/pombagira-revelada/", category: "Reino Pombagira", featured: true },
+      { id: "pombagira-revelada-underscore", title: "Pombagira Revelada (variação)", url: "https://alexialuzdeferro.github.io/pombagira_revelada/", category: "Reino Pombagira" },
+      { id: "pombagiras", title: "Pombagiras", url: "https://alexialuzdeferro.github.io/Pombagiras/", category: "Reino Pombagira" },
+      { id: "almasdepombagira", title: "Almas de Pombagira", url: "https://alexialuzdeferro.github.io/almasdepombagira/", category: "Reino Pombagira", featured: true },
+      { id: "minha-pombagira", title: "Minha Pombagira", url: "https://alexialuzdeferro.github.io/minha-pombagira/", category: "Reino Pombagira" },
+      { id: "12rainhas", title: "12 Rainhas — Pombagiras", url: "https://alexialuzdeferro.github.io/12rainhas-pombagiras/", category: "Reino Pombagira" },
+      { id: "giras", title: "Giras", url: "https://alexialuzdeferro.github.io/giras/", category: "Reino Pombagira" },
+      { id: "misterio-das-giras", title: "Mistério das Giras", url: "https://alexialuzdeferro.github.io/misterio-das-giras/", category: "Reino Pombagira" },
+      { id: "grimorio-github", title: "Grimório das Pombagiras (GitHub)", url: "https://github.com/alexialuzdeferro/grimorio-das-pombagiras/", category: "Reino Pombagira" },
+      { id: "oraculo-pombagiras", title: "Oráculo Pombagiras", url: "https://alexialuzdeferro.github.io/oraculo-pombagiras/", category: "Oráculos & Magia", featured: true },
+      { id: "12-oraculo", title: "12 — Oráculo", url: "https://alexialuzdeferro.github.io/12-oraculo/", category: "Oráculos & Magia" },
+      { id: "cartas-rosa-e-fogo", title: "Cartas Rosa e Fogo", url: "https://alexialuzdeferro.github.io/Cartas-Rosa-e-Fogo/", category: "Oráculos & Magia" },
+      { id: "velas-virtuais", title: "Velas Virtuais", url: "https://alexialuzdeferro.github.io/Velas-Virtuais/", category: "Oráculos & Magia" },
+      { id: "pontos-cantados", title: "Pontos Cantados", url: "https://alexialuzdeferro.github.io/PONTOS-CANTADOS/", category: "Giras & Sons", featured: true },
+      { id: "soundboard", title: "Soundboard — Pombagiras", url: "https://alexialuzdeferro.github.io/-Soundboard-Pombagiras-/", category: "Giras & Sons" },
+      { id: "gira-completa", title: "Gira Completa", url: "https://alexialuzdeferro.github.io/gira-completa/", category: "Giras & Sons" },
+      { id: "paz", title: "Espaço de Paz", url: "https://alexialuzdeferro.github.io/paz/", category: "Meditação" },
+      { id: "relaxamento", title: "Relaxamento", url: "https://alexialuzdeferro.github.io/relaxamento/", category: "Meditação" },
+      { id: "paz-interior", title: "Paz Interior", url: "https://alexialuzdeferro.github.io/paz_interior/", category: "Meditação" },
+      { id: "meditacao", title: "Meditação", url: "https://alexialuzdeferro.github.io/medita-o/", category: "Meditação" },
+      { id: "business-card", title: "Business Card", url: "https://alexialuzdeferro.github.io/Business-Card/", category: "Cartão de Visita" },
+      { id: "card-visit", title: "Card Visit", url: "https://alexialuzdeferro.github.io/card_visit/", category: "Cartão de Visita" },
+      { id: "melusine-card", title: "Melusine Card", url: "https://alexialuzdeferro.github.io/melusine-card/", category: "Cartão de Visita" },
+      { id: "visitas-card", title: "Visitas — Card", url: "https://alexialuzdeferro.github.io/visitas-card/", category: "Cartão de Visita" },
+      { id: "dark-music", title: "Dark Music", url: "https://alexialuzdeferro.github.io/dark-music/", category: "Música", featured: true },
+      { id: "dark-tv", title: "Dark TV", url: "https://alexialuzdeferro.github.io/dark-tv/", category: "Música" },
+      { id: "dark-melancholy", title: "Dark Melancholy", url: "https://alexialuzdeferro.github.io/dark-melancholy/", category: "Música" },
+      { id: "tv-cyber-goth", title: "TV Cyber Goth", url: "https://alexialuzdeferro.github.io/tv-cyber-goth/", category: "Música" },
+      { id: "vampire-waves", title: "Vampire Waves", url: "https://alexialuzdeferro.github.io/vampire-waves/", category: "Música" },
+      { id: "card-photos", title: "Card Photos", url: "https://alexialuzdeferro.github.io/card-photos/", category: "Galeria" }
+    ];
 
-        // Giras & Sons (3)
-        { id: "pontos-cantados", title: "Pontos Cantados", url: "https://alexialuzdeferro.github.io/PONTOS-CANTADOS/", category: "Giras & Sons", featured: true },
-        { id: "soundboard", title: "Soundboard — Pombagiras", url: "https://alexialuzdeferro.github.io/-Soundboard-Pombagiras-/", category: "Giras & Sons" },
-        { id: "gira-completa", title: "Gira Completa", url: "https://alexialuzdeferro.github.io/gira-completa/", category: "Giras & Sons" },
+    // Combinar links existentes com novos (ignorando duplicatas)
+    const allLinks = [...EXISTING_LINKS];
+    
+    for (const novo of NOVOS_REPOSITORIOS) {
+      if (!existingUrls.has(novo.url)) {
+        allLinks.push(novo);
+      }
+    }
 
-        // Meditação (4)
-        { id: "paz", title: "Espaço de Paz", url: "https://alexialuzdeferro.github.io/paz/", category: "Meditação" },
-        { id: "relaxamento", title: "Relaxamento", url: "https://alexialuzdeferro.github.io/relaxamento/", category: "Meditação" },
-        { id: "paz-interior", title: "Paz Interior", url: "https://alexialuzdeferro.github.io/paz_interior/", category: "Meditação" },
-        { id: "meditacao", title: "Meditação", url: "https://alexialuzdeferro.github.io/medita-o/", category: "Meditação" },
-
-        // Cartão de Visita (4)
-        { id: "business-card", title: "Business Card", url: "https://alexialuzdeferro.github.io/Business-Card/", category: "Cartão de Visita" },
-        { id: "card-visit", title: "Card Visit", url: "https://alexialuzdeferro.github.io/card_visit/", category: "Cartão de Visita" },
-        { id: "melusine-card", title: "Melusine Card", url: "https://alexialuzdeferro.github.io/melusine-card/", category: "Cartão de Visita" },
-        { id: "visitas-card", title: "Visitas — Card", url: "https://alexialuzdeferro.github.io/visitas-card/", category: "Cartão de Visita" },
-
-        // Dark Waves & Music (5)
-        { id: "dark-music", title: "Dark Music", url: "https://alexialuzdeferro.github.io/dark-music/", category: "Dark Waves & Music", featured: true },
-        { id: "dark-tv", title: "Dark TV", url: "https://alexialuzdeferro.github.io/dark-tv/", category: "Dark Waves & Music" },
-        { id: "dark-melancholy", title: "Dark Melancholy", url: "https://alexialuzdeferro.github.io/dark-melancholy/", category: "Dark Waves & Music" },
-        { id: "tv-cyber-goth", title: "TV Cyber Goth", url: "https://alexialuzdeferro.github.io/tv-cyber-goth/", category: "Dark Waves & Music" },
-        { id: "vampire-waves", title: "Vampire Waves", url: "https://alexialuzdeferro.github.io/vampire-waves/", category: "Dark Waves & Music" },
-
-        // Galeria (1)
-        { id: "card-photos", title: "Card Photos", url: "https://alexialuzdeferro.github.io/card-photos/", category: "Galeria" },
-      ]
-    };
+    // Definir categorias dinâmicas baseadas nos links
+    const categoriesSet = new Set();
+    allLinks.forEach(link => categoriesSet.add(link.category));
+    const CATEGORIES = Array.from(categoriesSet).sort();
 
     // ===========================
     // UI: estado e render
@@ -505,7 +595,7 @@
     const elTotal = document.getElementById('totalCount');
     const elActiveCategory = document.getElementById('activeCategory');
 
-    elTotal.textContent = DATA.links.length.toLocaleString('pt-BR');
+    elTotal.textContent = allLinks.length.toLocaleString('pt-BR');
 
     function norm(s){ return (s||"").toString().trim().toLowerCase(); }
 
@@ -547,12 +637,12 @@
       elPills.innerHTML = '';
       const all = makePill('Todos');
       elPills.appendChild(all);
-      DATA.categories.forEach(c => elPills.appendChild(makePill(c)));
+      CATEGORIES.forEach(c => elPills.appendChild(makePill(c)));
     }
 
     function filterLinks(){
       const q = norm(state.query);
-      return DATA.links.filter(l => {
+      return allLinks.filter(l => {
         if(state.featuredOnly && !l.featured) return false;
         if(state.category !== 'Todos' && l.category !== state.category) return false;
         if(!q) return true;
@@ -563,7 +653,7 @@
 
     function groupByCategory(links){
       const map = new Map();
-      DATA.categories.forEach(c => map.set(c, []));
+      CATEGORIES.forEach(c => map.set(c, []));
       links.forEach(l => {
         if(!map.has(l.category)) map.set(l.category, []);
         map.get(l.category).push(l);
@@ -576,25 +666,21 @@
       const filtered = filterLinks();
       const grouped = groupByCategory(filtered);
 
-      // update header state
       elVisible.textContent = filtered.length.toLocaleString('pt-BR');
       elActiveCategory.textContent = state.category;
 
-      // toggle pill classes
       document.querySelectorAll('.pill').forEach(p => {
         const label = p.textContent;
         if(label === state.category || (label === 'Todos' && state.category==='Todos')) p.classList.add('active');
         else p.classList.remove('active');
       });
 
-      // featured state button
       elFeatured.classList.toggle('active', state.featuredOnly);
 
-      // render sections
       elSections.innerHTML = '';
       let any = false;
 
-      DATA.categories.forEach(category => {
+      CATEGORIES.forEach(category => {
         const links = grouped.get(category) || [];
         if(links.length === 0) return;
         any = true;
@@ -666,89 +752,6 @@
     // initial
     renderPills();
     render();
-  </script>
-
-  <script>
-    // ===========================
-    // CONTADOR DE VISUALIZAÇÕES (Supabase)
-    // ID da página mantido: start
-    // ===========================
-    const CONFIG = {
-      SUPABASE_URL: 'https://rbygxkbewzknvjjhxdvw.supabase.co',
-      SUPABASE_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJieWd4a2Jld3prbnZqamh4ZHZ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYwMDcxNjQsImV4cCI6MjA4MTU4MzE2NH0.YrHF9HEGo6yv9MyNsPzFgBhaAB1DRh2SLU8f7L6s1nY',
-      PAGE_NAME: 'start',
-      SESSION_KEY: 'page_visit_start'
-    };
-
-    const viewCounter = document.getElementById('viewCounter');
-    const counterNumber = document.getElementById('counterNumber');
-
-    const { createClient } = supabase;
-    const supabaseClient = createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_KEY);
-
-    function hasVisitedInThisSession(){
-      return sessionStorage.getItem(CONFIG.SESSION_KEY) === 'true';
-    }
-    function markAsVisited(){
-      sessionStorage.setItem(CONFIG.SESSION_KEY, 'true');
-    }
-
-    async function loadCurrentCount(){
-      viewCounter.classList.add('loading');
-      try {
-        const { data, error } = await supabaseClient
-          .from('page_views')
-          .select('view_count')
-          .eq('page', CONFIG.PAGE_NAME)
-          .single();
-
-        let count = 0;
-        if (error && error.code !== 'PGRST116') throw error;
-        if (data) count = data.view_count || 0;
-        counterNumber.textContent = count.toLocaleString('pt-BR');
-
-      } catch (err) {
-        counterNumber.textContent = '?';
-      } finally {
-        viewCounter.classList.remove('loading');
-      }
-    }
-
-    function useLocalStorageFallback(){
-      const key = `counter_${CONFIG.PAGE_NAME}`;
-      let count = parseInt(localStorage.getItem(key)) || 0;
-      count++;
-      localStorage.setItem(key, count);
-      counterNumber.textContent = count.toLocaleString('pt-BR');
-      viewCounter.title = 'Modo offline (localStorage) — clique para atualizar';
-    }
-
-    async function incrementCount(){
-      viewCounter.classList.add('loading');
-      try {
-        const { data, error } = await supabaseClient
-          .rpc('increment_page_view', { target_page: CONFIG.PAGE_NAME });
-
-        if (error) throw error;
-        counterNumber.textContent = Number(data).toLocaleString('pt-BR');
-
-      } catch (err) {
-        useLocalStorageFallback();
-      } finally {
-        viewCounter.classList.remove('loading');
-      }
-    }
-
-    async function initCounter(){
-      await loadCurrentCount();
-      if(!hasVisitedInThisSession()){
-        await incrementCount();
-        markAsVisited();
-      }
-      viewCounter.addEventListener('click', loadCurrentCount);
-    }
-
-    document.addEventListener('DOMContentLoaded', initCounter);
   </script>
 </body>
 </html>
